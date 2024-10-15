@@ -1,7 +1,8 @@
 document.addEventListener('DOMContentLoaded', () => {
     const playlistList = document.getElementById('playlist-list');
     const videoList = document.getElementById('video-list');
-    const pdfList = document.getElementById('pdf-list'); // Reference to PDF list
+    const pdfList = document.getElementById('pdf-list');
+    const onlinePdfList = document.getElementById('online-pdf-list'); // New online PDF list reference
 
     const playlists = [
         { name: "Set Theory", url: "https://youtube.com/playlist?list=PLEHGYFbPuuMEMCD-8hwgnsZS0xKd8ydie&si=8tXVkKQVxpmVOGOO" },
@@ -15,7 +16,7 @@ document.addEventListener('DOMContentLoaded', () => {
         { name: "Questions of Mathematical Induction", url: "https://youtu.be/d-C0TOMolqo?si=Vx9Z6-WmYdkzOeRA" },
         { name: "Examples of Mathematical Induction", url: "https://youtu.be/x96dWnDvY6A?si=mZeTD5CdNcTbEQ9F" },
         { name: "Most Important Questions of Mathematical Induction", url: "https://youtu.be/Aecx6sUIqBE?si=02VdjH197aiMroZ4" },
-        { name: "Complete Discrete Mathematics [One Shot]", url: "https://www.youtube.com/watch?v=papVRQqtrgc"}
+        { name: "Complete Discrete Mathematics [One Shot]", url: "https://www.youtube.com/watch?v=papVRQqtrgc" }
     ];
 
     const relatedInfo = [
@@ -24,14 +25,14 @@ document.addEventListener('DOMContentLoaded', () => {
         { name: "Relation", url: "https://www.geeksforgeeks.org/relation-in-maths/" },
         { name: "Function", url: "https://www.geeksforgeeks.org/functions-in-discrete-mathematics/" },
         { name: "Graph Theory", url: "https://www.geeksforgeeks.org/mathematics-graph-theory-basics/" },
-        { name: "Mathematical Induction", url: "https://www.geeksforgeeks.org/principle-of-mathematical-induction/" }
+        { name: "Mathematical Induction", url: "https://www.geeksforgeeks.org/principle-of-mathematical-induction/" },
+        { name: "Tree", url: "https://www.tutorialspoint.com/discrete_mathematics/introduction_to_trees.htm" }
     ];
 
     const books = [
-        { name: "Discrete Mathematics-Richard Johnsonbaugh.5th Edition", url: "Mathbook.pdf" },
+        { name: "Discrete Mathematics-Richard Johnsonbaugh.5th Edition", url: "Mathbook.pdf" }
     ];
 
-    // Updated PDF list with direct paths to PDF files
     const pdfs = [
         { name: "Set Theory", url: "ch1 set theory_compressed.pdf" },
         { name: "Logical Statement", url: "ch 2 logic.pdf" },
@@ -40,8 +41,20 @@ document.addEventListener('DOMContentLoaded', () => {
         { name: "Function", url: "ch5 function.pdf" },
         { name: "Growth of Functions", url: "ch6 growth of function.pdf" },
         { name: "Graph Theory", url: "ch7 graph theory.pdf" },
-        { name: "Tree", url: "ch 8 tree.pdf"},
-        { name: "Relation Related", url: "ch 9 relation related.pdf"}
+        { name: "Tree", url: "ch 8 tree.pdf" },
+        { name: "Relation Related", url: "ch 9 relation related.pdf" }
+    ];
+
+    const onlinePdfs = [
+        { name: "Set Theory", url: "https://drive.google.com/file/d/1wRCayUHG5OU99b2OXmMvTfpBxuPtpQmG/view" },
+        { name: "Logical Statement", url: "https://drive.google.com/file/d/1MG7TytBwWazccpq_Bag_zNwwrRNybCLL/view" },
+        { name: "Mathematical Induction", url: "https://drive.google.com/file/d/1XpGfhLGGs0O9kR-5VFYC2dOxh0_5VbNy/view" },
+        { name: "Relation", url: "https://drive.google.com/file/d/1Ettv47YdIXfGyw-p11o4Wp5iP-XGtjr_/view" },
+        { name: "Function", url: "https://drive.google.com/file/d/1x01G8aTXvqN7PqikPFTqfHIxCOPZ-mCi/view" },
+        { name: "Growth of Functions", url: "https://drive.google.com/file/d/1Dbr785ZgOYflDfLLYZN_gZKiQM3XMnU1/view" },
+        { name: "Graph Theory", url: "https://drive.google.com/file/d/1F7FAsd--4xTbX1jjz1g9nbYpzJWVkW8D/view" },
+        { name: "Tree", url: "https://drive.google.com/file/d/1OtWB3XNbiLelgvUiDoPxeTOPyyR0iLeq/view" },
+        { name: "Relation Related", url: "https://drive.google.com/file/d/1ZXtpR6seWyqc8xE6PzvJyEwyd5jN14Ya/view" }
     ];
 
     function renderButtons(list, elementId, buttonClass) {
@@ -51,18 +64,17 @@ document.addEventListener('DOMContentLoaded', () => {
             const button = document.createElement('button');
             button.className = buttonClass;
             button.textContent = item.name;
-            
+
             // Open URL in new tab for all links
             button.addEventListener('click', () => {
-                // Set the download attribute to suggest file download
                 const link = document.createElement('a');
                 link.href = item.url;
-                link.download = item.name; // Suggest a filename for download
+                link.target = "_blank"; // Open in new tab
                 document.body.appendChild(link);
                 link.click();
                 document.body.removeChild(link);
             });
-            
+
             container.appendChild(button);
         });
     }
@@ -72,4 +84,5 @@ document.addEventListener('DOMContentLoaded', () => {
     renderButtons(relatedInfo, 'related-info-list', 'related-info-button');
     renderButtons(books, 'book-list', 'book-button');
     renderButtons(pdfs, 'pdf-list', 'pdf-button');
+    renderButtons(onlinePdfs, 'online-pdf-list', 'pdf-button'); // Render online PDFs
 });
