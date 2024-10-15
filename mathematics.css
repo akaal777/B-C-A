@@ -318,6 +318,62 @@ footer p {
 .pdf-button:hover {
     transform: scale(1.05);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    background-color: #7b1fa2;
+    background-color: #8728b0;
+}
+
+
+
+
+
+#online-pdfs-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 1.5rem;
+    background-color: #fff;
+    border-radius: 10px;
+    margin-bottom: 2rem;
+}
+
+#online-pdf-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem; /* Space between buttons */
+    justify-content: center;
+}
+
+.pdf-button {
+    font-size: 1.2rem;
+    padding: 1rem 1.5rem;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    min-width: 200px; /* Minimum button width */
+    text-align: center;
+    background-color: #8b249d; /* Button color */
+    color: #fff;
+}
+
+.pdf-button:hover {
+    transform: scale(1.05); /* Scale effect on hover */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Shadow effect */
+    background-color: #8728b0; /* Darker shade on hover */
+}
+
+/* Responsive styles */
+@media screen and (max-width: 768px) {
+    .pdf-button {
+        font-size: 1rem; /* Smaller font size for tablets */
+        padding: 0.8rem 1.2rem; /* Adjust padding */
+        min-width: 150px; /* Minimum button width */
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .pdf-button {
+        font-size: 0.9rem; /* Smaller font size for mobile */
+        padding: 0.7rem 1rem; /* Adjust padding */
+        min-width: 120px; /* Minimum button width */
+    }
 }
 
