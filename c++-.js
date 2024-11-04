@@ -32,6 +32,7 @@ document.addEventListener('DOMContentLoaded', () => {
         { name: "C++ CheetSheet[github]", url: "https://github.com/EbookFoundation/free-programming-books/blob/main/more/free-programming-cheatsheets.md" },
         { name: "C++ Projects", url: "https://www.interviewbit.com/blog/cpp-projects/" },
         { name: "C++ Programs", url: "https://www.sanfoundry.com/cpp-programs/" },
+        { name: "C++ Notes", url: "https://drive.google.com/file/d/1uucE6DVdhbbUSoNUb4-ul32cCpD4ezlN/view" },
     ];
 
 
