@@ -1,19 +1,21 @@
 body {
-    font-family: Arial, sans-serif;
+    font-family: 'Roboto', sans-serif;
     line-height: 1.6;
     margin: 0;
     padding: 0;
-    background-color: #f4f4f4;
+    background-color: #0e0e0e;
+    color: #e4e4e4;
     font-size: 18px;
+    overflow-x: hidden;
 }
 
 header {
-    background: linear-gradient(45deg, #ff0000, #ff7300, #fffb00, #48ff00, #00ffd5, #002bff, #7a00ff, #ff00c8, #ff0000);
-    background-size: 400% 400%;
-    animation: wave 15s ease infinite;
+    background: linear-gradient(135deg, #00f260, #0575e6, #ff6a00);
+    background-size: 200% 200%;
+    animation: gradientMove 10s ease infinite;
     color: #fff;
     text-align: center;
-    padding: 1.5rem;
+    padding: 2rem;
     position: relative;
     overflow: hidden;
 }
@@ -25,19 +27,19 @@ header::before {
     left: 0;
     right: 0;
     bottom: 0;
-    background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="rgba(255,255,255,0.3)" fill-opacity="1" d="M0,96L48,112C96,128,192,160,288,186.7C384,213,480,235,576,213.3C672,192,768,128,864,128C960,128,1056,192,1152,208C1248,224,1344,192,1392,176L1440,160L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path></svg>');
+    background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="rgba(255,255,255,0.1)" fill-opacity="1" d="M0,160L48,170.7C96,181,192,203,288,186.7C384,171,480,117,576,96C672,75,768,85,864,128C960,171,1056,245,1152,277.3C1248,309,1344,299,1392,293.3L1440,288L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path></svg>');
     background-repeat: no-repeat;
-    background-position: bottom;
     background-size: cover;
-    opacity: 0.7;
+    opacity: 0.5;
     z-index: 1;
-    animation: wave 10s linear infinite;
 }
 
 h1 {
-    font-size: 2.5rem;
+    font-size: 3rem;
+    font-weight: bold;
     position: relative;
     z-index: 2;
+    animation: fadeInZoom 2s ease;
 }
 
 main {
@@ -47,224 +49,78 @@ main {
 }
 
 section {
-    background-color: #fff;
-    border-radius: 10px;
-    padding: 1.5rem;
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 20px;
+    padding: 2rem;
     margin-bottom: 2rem;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
+    transition: transform 0.3s ease;
+}
+
+section:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.7);
 }
 
 h2 {
-    color: #333;
-    font-size: 2rem;
-}
-
-ul {
-    list-style-type: none;
-    padding: 0;
-}
-
-li {
-    margin-bottom: 0.5rem;
-}
-
-.playlist-item, .video-item {
-    display: flex;
-    align-items: center;
-}
-
-.playlist-icon, .video-icon {
-    margin-right: 0.5rem;
-    font-size: 1.2rem;
+    color: #08fdd8;
+    font-size: 2.2rem;
+    text-transform: uppercase;
+    margin-bottom: 1.5rem;
+    animation: fadeIn 1.5s ease;
 }
 
 a {
     text-decoration: none;
-    color: #0000ff;
+    color: #08fdd8;
+    transition: color 0.3s;
 }
 
 a:hover {
-    text-decoration: underline;
+    color: #ff6a00;
 }
 
-#playlist-list,
-#video-list,
-#related-info-list,
-#notes-list { /* Added #notes-list here */
-    display: flex;
-    flex-wrap: wrap;
-    gap: 1rem;
-    justify-content: center;
-}
-
-.playlist-button,
-.video-button,
-.related-info-button {
+button {
     font-size: 1.2rem;
-    padding: 1rem 1.5rem;
-    border-radius: 10px;
+    padding: 1rem 2rem;
+    border-radius: 50px;
+    border: none;
     cursor: pointer;
-    transition: all 0.3s ease;
-    min-width: 200px;
-    text-align: center;
-}
-
-.playlist-button {
-    background-color: #ff0000;
+    transition: all 0.4s ease;
+    background: linear-gradient(135deg, #00f260, #0575e6);
     color: #fff;
-}
-
-.video-button {
-    background-color: #4CAF50;
-    color: #fff;
-}
-
-.related-info-button {
-    background-color: #3498db;
-    color: #fff;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
     position: relative;
     overflow: hidden;
 }
 
-.playlist-button:hover,
-.video-button:hover,
-.related-info-button:hover {
-    transform: scale(1.05);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+button:hover {
+    transform: scale(1.1);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
 }
 
-.playlist-button:hover {
-    background-color: #cc0000;
-}
-
-.video-button:hover {
-    background-color: #45a049;
-}
-
-.related-info-button:hover {
-    background-color: #2980b9;
-}
-
-.related-info-button::before {
+button::before {
     content: '';
     position: absolute;
-    top: -50%;
-    left: -50%;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    transition: width 0.4s, height 0.4s;
+    transform: translate(-50%, -50%);
+    z-index: 1;
+}
+
+button:hover::before {
     width: 200%;
     height: 200%;
-    background: radial-gradient(circle, rgba(255,255,255,0.3) 0%, rgba(255,255,255,0) 70%);
-    transform: scale(0);
-    transition: transform 0.3s ease-out;
 }
 
-.related-info-button:hover::before {
-    transform: scale(1);
-}
-
-#book-list {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 1rem;
-    justify-content: center;
-}
-
-.book-button {
-    font-size: 1.2rem;
-    padding: 1rem 1.5rem;
-    border-radius: 10px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    min-width: 200px;
-    text-align: center;
-    background-color: #9c27b0;
-    color: #fff;
-}
-
-.book-button:hover {
-    transform: scale(1.05);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    background-color: #7b1fa2;
-}
-
-@media screen and (max-width: 768px) {
-    body {
-        font-size: 16px;
-    }
-
-    h1 {
-        font-size: 2rem;
-    }
-
-    h2 {
-        font-size: 1.5rem;
-    }
-
-    .playlist-button,
-    .video-button,
-    .related-info-button {
-        font-size: 1rem;
-        padding: 0.8rem 1.2rem;
-        min-width: 150px;
-    }
-
-    .book-button {
-        font-size: 1rem;
-        padding: 0.8rem 1.2rem;
-        min-width: 150px;
-    }
-
-    footer p {
-        font-size: 0.9rem;
-    }
-}
-
-@media screen and (max-width: 480px) {
-    body {
-        font-size: 14px;
-    }
-
-    h1 {
-        font-size: 1.8rem;
-    }
-
-    h2 {
-        font-size: 1.3rem;
-    }
-
-    main {
-        padding: 1rem;
-    }
-
-    .playlist-button,
-    .video-button,
-    .related-info-button {
-        font-size: 0.9rem;
-        padding: 0.7rem 1rem;
-        min-width: 120px;
-    }
-
-    .book-button {
-        font-size: 0.9rem;
-        padding: 0.7rem 1rem;
-        min-width: 120px;
-    }
-
-    footer p {
-        font-size: 0.8rem;
-    }
-}
-
-@keyframes fadeInDown {
-    from {
-        opacity: 0;
-        transform: translateY(-20px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-@keyframes wave {
+@keyframes gradientMove {
     0% {
         background-position: 0% 50%;
     }
@@ -276,15 +132,33 @@ a:hover {
     }
 }
 
-.animate-header {
-    animation: fadeInDown 1s ease-out, wave 15s ease infinite;
+@keyframes fadeInZoom {
+    0% {
+        opacity: 0;
+        transform: scale(0.8);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 footer {
-    background-color: #333;
-    color: #fff;
+    background-color: #1a1a1a;
+    color: #8c8c8c;
     text-align: center;
-    padding: 1rem;
+    padding: 1.5rem;
     position: relative;
     bottom: 0;
     width: 100%;
@@ -295,20 +169,37 @@ footer p {
     font-size: 1rem;
 }
 
-.notes-button {
-    font-size: 1.2rem;
-    padding: 1rem 1.5rem;
-    border-radius: 10px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    min-width: 200px;
-    text-align: center;
-    background-color: #2a7dfa; /* Same as .playlist-button */
-    color: #fff;
+@media screen and (max-width: 768px) {
+    h1 {
+        font-size: 2.5rem;
+    }
+
+    h2 {
+        font-size: 1.8rem;
+    }
+
+    button {
+        font-size: 1rem;
+        padding: 0.8rem 1.5rem;
+    }
 }
 
-.notes-button:hover {
-    transform: scale(1.05);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    background-color: #0466fa; /* Same as .playlist-button:hover */
+@media screen and (max-width: 480px) {
+    h1 {
+        font-size: 2rem;
+    }
+
+    h2 {
+        font-size: 1.5rem;
+    }
+
+    main {
+        padding: 1rem;
+    }
+
+    button {
+        font-size: 0.9rem;
+        padding: 0.7rem 1.2rem;
+        margin-bottom: 10px;
+    }
 }
