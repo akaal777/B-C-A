@@ -1,39 +1,88 @@
 body {
-    font-family: Arial, sans-serif;
+    font-family: 'Roboto', sans-serif;
     text-align: center;
-    background-color: #f4f4f4;
-    color: #333;
+    background: linear-gradient(135deg, #1e1e2f, #3a3a6d);
+    color: #e0e0e0;
     margin: 0;
     padding: 20px;
+    overflow-x: hidden;
 }
 
 header {
-    background-color: #007BFF;
+    background: linear-gradient(90deg, #007BFF, #00d4ff);
     color: white;
     padding: 20px;
-    border-radius: 8px;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    text-transform: uppercase;
+    animation: slide-in 1s ease-out;
 }
 
 section {
-    margin: 20px 0;
+    margin: 30px 0;
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    animation: fade-in 1s ease-in;
 }
 
 h2 {
-    font-size: 24px;
+    font-size: 28px;
+    color: #00d4ff;
+    text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.4);
 }
 
 .big-button {
-    font-size: 20px;
+    font-size: 18px;
     padding: 15px 30px;
     margin: 10px;
-    background-color: #28a745;
+    background: linear-gradient(90deg, #28a745, #1cc94e);
     color: white;
     border: none;
-    border-radius: 5px;
+    border-radius: 8px;
     cursor: pointer;
-    transition: background-color 0.3s;
+    transition: transform 0.2s, background 0.3s;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
 }
 
 .big-button:hover {
-    background-color: #218838;
+    background: linear-gradient(90deg, #1cc94e, #28a745);
+    transform: scale(1.1);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.4);
+}
+
+@keyframes slide-in {
+    from {
+        transform: translateY(-50px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+@keyframes fade-in {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+section div {
+    animation: scale-up 0.8s ease-in-out;
+}
+
+@keyframes scale-up {
+    from {
+        transform: scale(0.9);
+        opacity: 0;
+    }
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
 }
