@@ -1,53 +1,101 @@
 body {
-    font-family: Arial, sans-serif;
+    font-family: 'Roboto', Arial, sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #f4f4f4;
+    background: linear-gradient(135deg, #1f1c2c, #928dab);
+    color: #fff;
+    overflow-x: hidden;
 }
 
 .container {
-    max-width: 800px;
-    margin: 0 auto;
+    max-width: 900px;
+    margin: 50px auto;
     text-align: center;
     padding: 20px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    animation: fadeIn 1s ease-in-out;
 }
 
 h1 {
-    font-size: 3rem;
-    color: #333;
+    font-size: 3.5rem;
+    color: #ff6f61;
+    margin-bottom: 20px;
+    animation: textPop 1.2s ease;
 }
 
 .section {
-    margin: 20px 0;
+    margin: 30px 0;
+    padding: 20px;
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    animation: slideIn 0.8s ease;
 }
 
 .button-container {
     display: flex;
-    flex-direction: column;
-    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
 }
 
 .pdf-button {
-    background-color: #007BFF;
+    background: linear-gradient(135deg, #ff6f61, #d72638);
     color: white;
-    font-size: 2rem;
-    padding: 20px 40px;
+    font-size: 1.2rem;
+    padding: 15px 30px;
     margin: 10px;
     border: none;
-    border-radius: 5px;
+    border-radius: 25px;
     cursor: pointer;
+    transition: transform 0.3s, background 0.3s;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
 
 .pdf-button:hover {
-    background-color: #0056b3;
+    transform: translateY(-5px);
+    background: linear-gradient(135deg, #d72638, #ff6f61);
 }
 
 @media (max-width: 600px) {
     h1 {
-        font-size: 2rem;
+        font-size: 2.5rem;
     }
     .pdf-button {
-        font-size: 1.5rem;
-        padding: 15px 30px;
+        font-size: 1rem;
+        padding: 10px 20px;
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateY(30px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+@keyframes textPop {
+    0% {
+        transform: scale(0.8);
+        opacity: 0.5;
+    }
+    100% {
+        transform: scale(1);
+        opacity: 1;
     }
 }
