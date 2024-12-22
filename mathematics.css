@@ -1,21 +1,22 @@
 body {
-    font-family: Arial, sans-serif;
-    line-height: 1.6;
+    font-family: 'Poppins', sans-serif;
+    line-height: 1.8;
     margin: 0;
     padding: 0;
-    background-color: #f4f4f4;
+    background: linear-gradient(to right, #1e3c72, #2a5298);
     font-size: 18px;
+    color: #ffffff;
 }
 
 header {
-    background: linear-gradient(45deg, #ff0000, #ff7300, #fffb00, #48ff00, #00ffd5, #002bff, #7a00ff, #ff00c8, #ff0000);
-    background-size: 400% 400%;
-    animation: wave 15s ease infinite;
+    background: linear-gradient(90deg, #ff7e5f, #feb47b);
     color: #fff;
     text-align: center;
-    padding: 1.5rem;
+    padding: 2rem;
     position: relative;
     overflow: hidden;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    animation: gradientFlow 8s infinite alternate;
 }
 
 header::before {
@@ -25,237 +26,155 @@ header::before {
     left: 0;
     right: 0;
     bottom: 0;
-    background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="rgba(255,255,255,0.3)" fill-opacity="1" d="M0,96L48,112C96,128,192,160,288,186.7C384,213,480,235,576,213.3C672,192,768,128,864,128C960,128,1056,192,1152,208C1248,224,1344,192,1392,176L1440,160L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path></svg>');
-    background-repeat: no-repeat;
-    background-position: bottom;
+    background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="rgba(255,255,255,0.2)" fill-opacity="1" d="M0,64L48,85.3C96,107,192,149,288,181.3C384,213,480,235,576,213.3C672,192,768,128,864,96C960,64,1056,64,1152,96C1248,128,1344,192,1392,224L1440,256L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path></svg>');
     background-size: cover;
-    opacity: 0.7;
+    opacity: 0.8;
     z-index: 1;
-    animation: wave 10s linear infinite;
+    animation: waveEffect 12s linear infinite;
 }
 
 h1 {
-    font-size: 2.5rem;
+    font-size: 3rem;
+    font-weight: bold;
     position: relative;
     z-index: 2;
+    letter-spacing: 2px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    animation: textGlow 3s infinite;
 }
 
 main {
     padding: 2rem;
     max-width: 1200px;
     margin: 0 auto;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(10px);
 }
 
 section {
-    background-color: #fff;
+    background: rgba(0, 0, 0, 0.5);
     border-radius: 10px;
-    padding: 1.5rem;
+    padding: 2rem;
     margin-bottom: 2rem;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
 }
 
 h2 {
-    color: #333;
-    font-size: 2rem;
+    font-size: 2.2rem;
+    font-weight: 600;
+    color: #ffdfba;
+    text-align: center;
+    margin-bottom: 1rem;
+    animation: fadeInUp 1s ease;
 }
 
-ul {
-    list-style-type: none;
-    padding: 0;
-}
-
-li {
-    margin-bottom: 0.5rem;
-}
-
-.playlist-item, .video-item {
-    display: flex;
-    align-items: center;
-}
-
-.playlist-icon, .video-icon {
-    margin-right: 0.5rem;
-    font-size: 1.2rem;
-}
-
-a {
-    text-decoration: none;
-    color: #0000ff;
-}
-
-a:hover {
-    text-decoration: underline;
-}
-
-#playlist-list,
-#video-list,
-#related-info-list {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 1rem;
-    justify-content: center;
-}
-
-.playlist-button,
-.video-button,
-.related-info-button {
-    font-size: 1.2rem;
+button {
     padding: 1rem 1.5rem;
     border-radius: 10px;
     cursor: pointer;
     transition: all 0.3s ease;
-    min-width: 200px;
-    text-align: center;
-}
-
-.playlist-button {
-    background-color: #ff0000;
-    color: #fff;
-}
-
-.video-button {
-    background-color: #4CAF50;
-    color: #fff;
-}
-
-.related-info-button {
-    background-color: #3498db;
+    border: none;
     color: #fff;
     position: relative;
     overflow: hidden;
+    background: linear-gradient(45deg, #6a11cb, #2575fc);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    margin: 0.5rem; /* Added margin for spacing */
 }
 
-.playlist-button:hover,
-.video-button:hover,
-.related-info-button:hover {
-    transform: scale(1.05);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+    animation: buttonPulse 1s infinite;
 }
 
-.playlist-button:hover {
-    background-color: #cc0000;
-}
-
-.video-button:hover {
-    background-color: #45a049;
-}
-
-.related-info-button:hover {
-    background-color: #2980b9;
-}
-
-.related-info-button::before {
+button::before {
     content: '';
     position: absolute;
-    top: -50%;
-    left: -50%;
-    width: 200%;
-    height: 200%;
-    background: radial-gradient(circle, rgba(255,255,255,0.3) 0%, rgba(255,255,255,0) 70%);
-    transform: scale(0);
-    transition: transform 0.3s ease-out;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0);
+    width: 300%;
+    height: 300%;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.3) 10%, rgba(255, 255, 255, 0) 60%);
+    transition: transform 0.5s ease;
+    border-radius: 50%;
+    z-index: 1;
 }
 
-.related-info-button:hover::before {
-    transform: scale(1);
+button:hover::before {
+    transform: translate(-50%, -50%) scale(1);
 }
 
-#book-list {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 1rem;
-    justify-content: center;
-}
-
-.book-button {
-    font-size: 1.2rem;
-    padding: 1rem 1.5rem;
-    border-radius: 10px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    min-width: 200px;
-    text-align: center;
-    background-color: #9c27b0;
+footer {
+    background: #333;
     color: #fff;
+    text-align: center;
+    padding: 1.5rem;
+    position: relative;
+    bottom: 0;
+    width: 100%;
+    box-shadow: 0 -4px 6px rgba(0, 0, 0, 0.1);
 }
 
-.book-button:hover {
-    transform: scale(1.05);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    background-color: #7b1fa2;
+footer p {
+    font-size: 1.1rem;
+    margin: 0;
+    animation: fadeInUp 1.5s ease;
 }
 
-@media screen and (max-width: 768px) {
+/* Responsive Design */
+@media (max-width: 768px) {
     body {
         font-size: 16px;
     }
 
     h1 {
+        font-size: 2.5rem;
+    }
+
+    h2 {
         font-size: 2rem;
     }
 
-    h2 {
-        font-size: 1.5rem;
-    }
-
-    .playlist-button,
-    .video-button,
-    .related-info-button {
-        font-size: 1rem;
-        padding: 0.8rem 1.2rem;
-        min-width: 150px;
-    }
-
-    .book-button {
-        font-size: 1rem;
-        padding: 0.8rem 1.2rem;
-        min-width: 150px;
-    }
-
-    footer p {
-        font-size: 0.9rem;
-    }
-}
-
-@media screen and (max-width: 480px) {
-    body {
-        font-size: 14px;
-    }
-
-    h1 {
-        font-size: 1.8rem;
-    }
-
-    h2 {
-        font-size: 1.3rem;
-    }
-
     main {
-        padding: 1rem;
+        padding: 1.5rem;
     }
 
-    .playlist-button,
-    .video-button,
-    .related-info-button {
+    section {
+        padding: 1.5rem;
+    }
+
+    button {
+        padding: 0.8rem 1.2rem;
         font-size: 0.9rem;
-        padding: 0.7rem 1rem;
-        min-width: 120px;
-    }
-
-    .book-button {
-        font-size: 0.9rem;
-        padding: 0.7rem 1rem;
-        min-width: 120px;
-    }
-
-    footer p {
-        font-size: 0.8rem;
     }
 }
 
-@keyframes fadeInDown {
+@keyframes gradientFlow {
+    0% {
+        background-position: 0% 50%;
+    }
+    100% {
+        background-position: 100% 50%;
+    }
+}
+
+@keyframes waveEffect {
+    0% {
+        background-position: 0% 0%;
+    }
+    100% {
+        background-position: 100% 100%;
+    }
+}
+
+@keyframes fadeInUp {
     from {
         opacity: 0;
-        transform: translateY(-20px);
+        transform: translateY(20px);
     }
     to {
         opacity: 1;
@@ -263,117 +182,23 @@ a:hover {
     }
 }
 
-@keyframes wave {
-    0% {
-        background-position: 0% 50%;
+@keyframes textGlow {
+    0%, 100% {
+        text-shadow: 0 0 10px #fff, 0 0 20px #ff9a00, 0 0 30px #ff6100;
     }
     50% {
-        background-position: 100% 50%;
+        text-shadow: 0 0 15px #fff, 0 0 25px #ff6a00, 0 0 35px #ff4100;
+    }
+}
+
+@keyframes buttonPulse {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.05);
     }
     100% {
-        background-position: 0% 50%;
+        transform: scale(1);
     }
 }
-
-.animate-header {
-    animation: fadeInDown 1s ease-out, wave 15s ease infinite;
-}
-
-footer {
-    background-color: #333;
-    color: #fff;
-    text-align: center;
-    padding: 1rem;
-    position: relative;
-    bottom: 0;
-    width: 100%;
-}
-
-footer p {
-    margin: 0;
-    font-size: 1rem;
-}
-
-#pdf-list {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 1rem;
-    justify-content: center;
-}
-
-
-
-.pdf-button {
-    font-size: 1.2rem;
-    padding: 1rem 1.5rem;
-    border-radius: 10px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    min-width: 200px;
-    text-align: center;
-    background-color: #9c27b0;
-    color: #fff;
-}
-
-.pdf-button:hover {
-    transform: scale(1.05);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    background-color: #8728b0;
-}
-
-
-
-
-
-#online-pdfs-section {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 1.5rem;
-    background-color: #fff;
-    border-radius: 10px;
-    margin-bottom: 2rem;
-}
-
-#online-pdf-list {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 1rem; /* Space between buttons */
-    justify-content: center;
-}
-
-.pdf-button {
-    font-size: 1.2rem;
-    padding: 1rem 1.5rem;
-    border-radius: 10px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    min-width: 200px; /* Minimum button width */
-    text-align: center;
-    background-color: #8b249d; /* Button color */
-    color: #fff;
-}
-
-.pdf-button:hover {
-    transform: scale(1.05); /* Scale effect on hover */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Shadow effect */
-    background-color: #8728b0; /* Darker shade on hover */
-}
-
-/* Responsive styles */
-@media screen and (max-width: 768px) {
-    .pdf-button {
-        font-size: 1rem; /* Smaller font size for tablets */
-        padding: 0.8rem 1.2rem; /* Adjust padding */
-        min-width: 150px; /* Minimum button width */
-    }
-}
-
-@media screen and (max-width: 480px) {
-    .pdf-button {
-        font-size: 0.9rem; /* Smaller font size for mobile */
-        padding: 0.7rem 1rem; /* Adjust padding */
-        min-width: 120px; /* Minimum button width */
-    }
-}
-
