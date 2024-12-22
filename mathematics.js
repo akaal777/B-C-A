@@ -30,7 +30,7 @@ document.addEventListener('DOMContentLoaded', () => {
     ];
 
     const books = [
-        { name: "Discrete Mathematics-Richard Johnsonbaugh.5th Edition", url: "https://sjce.ac.in/wp-content/uploads/2021/12/DMS-Unit_1.pdf" }
+        { name: "Discrete Mathematics-Richard Johnsonbaugh.5th Edition", url: "https://ia800500.us.archive.org/33/items/richard-johnsonbaugh.-discrete-mathematics/richard%20johnsonbaugh.%20discrete%20mathematics.pdf" }
     ];
 
     const pdfs = [
