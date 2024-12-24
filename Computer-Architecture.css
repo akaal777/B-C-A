@@ -1,88 +1,123 @@
 body {
     font-family: 'Roboto', sans-serif;
     text-align: center;
-    background: linear-gradient(135deg, #1e1e2f, #3a3a6d);
+    background: linear-gradient(135deg, #0f0f3d, #2c2c54);
     color: #e0e0e0;
     margin: 0;
     padding: 20px;
+    perspective: 1000px;
     overflow-x: hidden;
 }
 
 header {
-    background: linear-gradient(90deg, #007BFF, #00d4ff);
+    background: linear-gradient(90deg, #00FFFF, #007BFF);
     color: white;
     padding: 20px;
-    border-radius: 12px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    border-radius: 20px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
     text-transform: uppercase;
-    animation: slide-in 1s ease-out;
+    animation: slide-in-3d 1.5s ease-out;
+    transform-origin: top;
 }
 
 section {
     margin: 30px 0;
     padding: 20px;
     background: rgba(255, 255, 255, 0.1);
-    border-radius: 12px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-    animation: fade-in 1s ease-in;
+    border-radius: 20px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
+    transform: rotateY(5deg);
+    animation: fade-in-3d 1s ease-in-out;
 }
 
 h2 {
-    font-size: 28px;
-    color: #00d4ff;
-    text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.4);
+    font-size: 32px;
+    color: #00FFFF;
+    text-shadow: none;
+    animation: futuristic-glow 2s infinite alternate ease-in-out;
+}
+
+@keyframes futuristic-glow {
+    0% {
+        text-shadow: 0 0 5px #00FFFF, 0 0 10px #00FFFF, 0 0 20px #00FFFF;
+    }
+    100% {
+        text-shadow: 0 0 10px #00FFFF, 0 0 20px #00FFFF, 0 0 40px #00FFFF;
+    }
 }
 
 .big-button {
-    font-size: 18px;
-    padding: 15px 30px;
-    margin: 10px;
-    background: linear-gradient(90deg, #28a745, #1cc94e);
+    font-size: 20px;
+    padding: 15px 35px;
+    margin: 15px;
+    background: linear-gradient(90deg, #12c2e9, #c471ed, #f64f59);
     color: white;
     border: none;
-    border-radius: 8px;
+    border-radius: 12px;
     cursor: pointer;
-    transition: transform 0.2s, background 0.3s;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    transition: transform 0.4s ease, background 0.3s ease, box-shadow 0.3s;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+    transform: rotateX(10deg);
 }
 
 .big-button:hover {
-    background: linear-gradient(90deg, #1cc94e, #28a745);
-    transform: scale(1.1);
-    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.4);
+    background: linear-gradient(90deg, #f64f59, #c471ed, #12c2e9);
+    transform: scale(1.15) rotateX(0deg);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
 }
 
-@keyframes slide-in {
+@keyframes slide-in-3d {
     from {
-        transform: translateY(-50px);
+        transform: rotateX(90deg) translateY(-100px);
         opacity: 0;
     }
     to {
-        transform: translateY(0);
+        transform: rotateX(25deg) translateY(0);
         opacity: 1;
     }
 }
 
-@keyframes fade-in {
+@keyframes fade-in-3d {
     from {
+        transform: rotateY(30deg) translateZ(-200px);
         opacity: 0;
     }
     to {
+        transform: rotateY(5deg) translateZ(0);
         opacity: 1;
     }
 }
 
 section div {
-    animation: scale-up 0.8s ease-in-out;
+    animation: pulse 1.2s infinite ease-in-out, scale-up-3d 0.8s ease-in-out;
 }
 
-@keyframes scale-up {
+@keyframes scale-up-3d {
     from {
-        transform: scale(0.9);
+        transform: scale(0.8) rotateZ(10deg);
         opacity: 0;
     }
     to {
-        transform: scale(1);
+        transform: scale(1) rotateZ(0deg);
         opacity: 1;
     }
+}
+
+@keyframes pulse {
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.05);
+    }
+}
+
+footer {
+    margin-top: 30px;
+    padding: 15px;
+    background: linear-gradient(90deg, #3a3a6d, #1e1e2f);
+    border-radius: 20px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
+    color: #e0e0e0;
+    animation: fade-in-3d 1s ease-in-out;
 }
