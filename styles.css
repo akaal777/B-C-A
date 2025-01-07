@@ -7,13 +7,13 @@ body {
     align-items: center;
     justify-content: center;
     height: 100vh;
-    background: linear-gradient(45deg, #ff6b6b, #4ecdc4, #45b7d1, #f7d794);
+    background: linear-gradient(45deg, #f9e6ff, #e0f7fa, #ffecb3, #ffe6cc);
     background-size: 400% 400%;
-    animation: gradientAnimation 8s ease infinite;
+    animation: waveAnimation 10s ease infinite;
     overflow: hidden;
 }
 
-@keyframes gradientAnimation {
+@keyframes waveAnimation {
     0% {
         background-position: 0% 50%;
     }
@@ -29,31 +29,32 @@ h1 {
     text-align: center;
     font-size: 3em;
     color: #fff;
-    animation: futuristicGlow 3s ease-in-out infinite, textSlide 2s ease-out;
-    text-shadow: 0 0 20px rgba(255, 255, 255, 0.8), 0 0 30px rgba(255, 255, 255, 0.6), 0 0 40px rgba(255, 255, 255, 0.4);
+    animation: futuristicPulse 2s infinite, fadeIn 2s ease-out;
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.8), 0 0 20px rgba(255, 255, 255, 0.6);
     position: relative;
     z-index: 1;
 }
 
-@keyframes futuristicGlow {
+@keyframes futuristicPulse {
     0% {
-        text-shadow: 0 0 20px rgba(255, 255, 255, 0.8), 0 0 30px rgba(255, 255, 255, 0.6), 0 0 40px rgba(255, 255, 255, 0.4);
+        transform: scale(1);
+        text-shadow: 0 0 10px rgba(255, 255, 255, 0.8), 0 0 20px rgba(255, 255, 255, 0.6);
     }
     50% {
-        text-shadow: 0 0 30px rgba(0, 255, 255, 0.8), 0 0 40px rgba(0, 255, 255, 0.6), 0 0 50px rgba(0, 255, 255, 0.4);
+        transform: scale(1.1);
+        text-shadow: 0 0 30px rgba(0, 255, 204, 0.8), 0 0 40px rgba(0, 255, 204, 0.6);
     }
     100% {
-        text-shadow: 0 0 20px rgba(255, 255, 255, 0.8), 0 0 30px rgba(255, 255, 255, 0.6), 0 0 40px rgba(255, 255, 255, 0.4);
+        transform: scale(1);
+        text-shadow: 0 0 10px rgba(255, 255, 255, 0.8), 0 0 20px rgba(255, 255, 255, 0.6);
     }
 }
 
-@keyframes textSlide {
+@keyframes fadeIn {
     from {
-        transform: translateY(-20px);
         opacity: 0;
     }
     to {
-        transform: translateY(0);
         opacity: 1;
     }
 }
@@ -70,23 +71,37 @@ button {
     margin: 10px 0;
     cursor: pointer;
     border: none;
-    background-color: #007BFF;
-    color: white;
+    background: linear-gradient(45deg, #a1c4fd, #c2e9fb);
+    color: #ffffff;
     border-radius: 30px;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
-    box-shadow: 0 5px 15px rgba(0, 123, 255, 0.4);
+    box-shadow: 0 5px 15px rgba(161, 196, 253, 0.6);
     position: relative;
     z-index: 1;
+    width: 200px; /* Ensuring uniform button width */
+    animation: futuristicGlow 4s ease-in-out infinite;
 }
 
 button:hover {
     transform: translateY(-5px) scale(1.05);
-    box-shadow: 0 10px 20px rgba(0, 123, 255, 0.6);
-    background-color: #0056b3;
+    box-shadow: 0 10px 20px rgba(161, 196, 253, 0.8);
+    background: linear-gradient(45deg, #89f7fe, #66a6ff);
 }
 
 button:active {
     transform: translateY(2px) scale(0.98);
+}
+
+@keyframes futuristicGlow {
+    0% {
+        box-shadow: 0 0 15px rgba(161, 196, 253, 0.6);
+    }
+    50% {
+        box-shadow: 0 0 30px rgba(89, 247, 254, 0.8);
+    }
+    100% {
+        box-shadow: 0 0 15px rgba(161, 196, 253, 0.6);
+    }
 }
 
 @media (min-width: 600px) {
@@ -104,4 +119,17 @@ footer {
     height: 200px;
     background: transparent;
     overflow: hidden;
+    animation: footerPulse 6s infinite;
+}
+
+@keyframes footerPulse {
+    0% {
+        background: linear-gradient(45deg, #ffcccb, #ffe6cc);
+    }
+    50% {
+        background: linear-gradient(45deg, #ffecb3, #ffcccb);
+    }
+    100% {
+        background: linear-gradient(45deg, #ffcccb, #ffe6cc);
+    }
 }
