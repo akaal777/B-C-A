@@ -1,48 +1,45 @@
 body {
     font-family: 'Roboto', sans-serif;
     text-align: center;
-    background: linear-gradient(135deg, #0f0f3d, #2c2c54);
-    color: #e0e0e0;
+    background: linear-gradient(135deg, #f3f4f6, #ffffff);
+    color: #333333;
     margin: 0;
     padding: 20px;
-    perspective: 1000px;
     overflow-x: hidden;
 }
 
 header {
-    background: linear-gradient(90deg, #00FFFF, #007BFF);
-    color: white;
+    background: linear-gradient(90deg, #ff9a9e, #fad0c4);
+    color: #333333;
     padding: 20px;
     border-radius: 20px;
-    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
     text-transform: uppercase;
-    animation: slide-in-3d 1.5s ease-out;
-    transform-origin: top;
+    animation: glow-header 1.5s ease-out infinite alternate;
 }
 
 section {
     margin: 30px 0;
     padding: 20px;
-    background: rgba(255, 255, 255, 0.1);
+    background: rgba(255, 255, 255, 0.8);
     border-radius: 20px;
-    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
-    transform: rotateY(5deg);
-    animation: fade-in-3d 1s ease-in-out;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+    animation: glow-section 1.5s infinite alternate;
 }
 
 h2 {
     font-size: 32px;
-    color: #00FFFF;
-    text-shadow: none;
-    animation: futuristic-glow 2s infinite alternate ease-in-out;
+    color: #ff9a9e;
+    text-shadow: 0 0 10px rgba(255, 154, 158, 0.5);
+    animation: glow-text 2s infinite alternate ease-in-out;
 }
 
-@keyframes futuristic-glow {
+@keyframes glow-text {
     0% {
-        text-shadow: 0 0 5px #00FFFF, 0 0 10px #00FFFF, 0 0 20px #00FFFF;
+        text-shadow: 0 0 10px rgba(255, 154, 158, 0.5);
     }
     100% {
-        text-shadow: 0 0 10px #00FFFF, 0 0 20px #00FFFF, 0 0 40px #00FFFF;
+        text-shadow: 0 0 20px rgba(255, 154, 158, 1);
     }
 }
 
@@ -50,74 +47,64 @@ h2 {
     font-size: 20px;
     padding: 15px 35px;
     margin: 15px;
-    background: linear-gradient(90deg, #12c2e9, #c471ed, #f64f59);
-    color: white;
+    background: linear-gradient(90deg, #a1c4fd, #c2e9fb);
+    color: #333333;
     border: none;
     border-radius: 12px;
     cursor: pointer;
-    transition: transform 0.4s ease, background 0.3s ease, box-shadow 0.3s;
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
-    transform: rotateX(10deg);
+    transition: transform 0.3s ease, background 0.3s ease, box-shadow 0.3s;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+    animation: glow-button 2s infinite alternate;
 }
 
 .big-button:hover {
-    background: linear-gradient(90deg, #f64f59, #c471ed, #12c2e9);
-    transform: scale(1.15) rotateX(0deg);
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+    background: linear-gradient(90deg, #c2e9fb, #a1c4fd);
+    transform: scale(1.1);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
 }
 
-@keyframes slide-in-3d {
-    from {
-        transform: rotateX(90deg) translateY(-100px);
-        opacity: 0;
+@keyframes glow-header {
+    0% {
+        box-shadow: 0 0 10px rgba(255, 154, 158, 0.5);
     }
-    to {
-        transform: rotateX(25deg) translateY(0);
-        opacity: 1;
-    }
-}
-
-@keyframes fade-in-3d {
-    from {
-        transform: rotateY(30deg) translateZ(-200px);
-        opacity: 0;
-    }
-    to {
-        transform: rotateY(5deg) translateZ(0);
-        opacity: 1;
+    100% {
+        box-shadow: 0 0 20px rgba(255, 154, 158, 1);
     }
 }
 
-section div {
-    animation: pulse 1.2s infinite ease-in-out, scale-up-3d 0.8s ease-in-out;
-}
-
-@keyframes scale-up-3d {
-    from {
-        transform: scale(0.8) rotateZ(10deg);
-        opacity: 0;
+@keyframes glow-section {
+    0% {
+        box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
     }
-    to {
-        transform: scale(1) rotateZ(0deg);
-        opacity: 1;
+    100% {
+        box-shadow: 0 0 20px rgba(255, 255, 255, 1);
     }
 }
 
-@keyframes pulse {
-    0%, 100% {
-        transform: scale(1);
+@keyframes glow-button {
+    0% {
+        box-shadow: 0 0 10px rgba(161, 196, 253, 0.5);
     }
-    50% {
-        transform: scale(1.05);
+    100% {
+        box-shadow: 0 0 20px rgba(161, 196, 253, 1);
     }
 }
 
 footer {
     margin-top: 30px;
     padding: 15px;
-    background: linear-gradient(90deg, #3a3a6d, #1e1e2f);
+    background: linear-gradient(90deg, #d4fc79, #96e6a1);
     border-radius: 20px;
-    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
-    color: #e0e0e0;
-    animation: fade-in-3d 1s ease-in-out;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+    color: #333333;
+    animation: glow-footer 1.5s infinite alternate;
+}
+
+@keyframes glow-footer {
+    0% {
+        box-shadow: 0 0 10px rgba(212, 252, 121, 0.5);
+    }
+    100% {
+        box-shadow: 0 0 20px rgba(212, 252, 121, 1);
+    }
 }
