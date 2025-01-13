@@ -7,7 +7,7 @@ body {
     align-items: center;
     justify-content: center;
     height: 100vh;
-    background: linear-gradient(45deg, #f9e6ff, #e0f7fa, #ffecb3, #ffe6cc);
+    background: linear-gradient(45deg, #2c3e50, #34495e, #1c2833, #212f3d);
     background-size: 400% 400%;
     animation: waveAnimation 10s ease infinite;
     overflow: hidden;
@@ -80,6 +80,32 @@ button {
     z-index: 1;
     width: 200px; /* Ensuring uniform button width */
     animation: futuristicGlow 4s ease-in-out infinite;
+    overflow: hidden;
+    isolation: isolate;
+}
+
+button:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 300%;
+    height: 300%;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.6) 0%, rgba(255, 255, 255, 0) 60%);
+    transform: rotate(45deg);
+    animation: crystileEffect 2s linear infinite;
+}
+
+@keyframes crystileEffect {
+    0% {
+        left: -100%;
+    }
+    50% {
+        left: 0;
+    }
+    100% {
+        left: 100%;
+    }
 }
 
 button:hover {
