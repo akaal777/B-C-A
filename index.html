@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title> BCA Hub</title>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Roboto:wght@300;400&display=swap" rel="stylesheet">
+    <title>BCA Grand Line</title>
+    <link href="https://fonts.googleapis.com/css2?family=IM+Fell+English+SC&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
     <style>
         body {
-            font-family: 'Roboto', 'Orbitron', sans-serif; /* Roboto for general, Orbitron for specific */
+            font-family: 'Roboto', sans-serif;
             margin: 0;
             padding: 0;
             display: flex;
@@ -15,113 +15,62 @@
             align-items: center;
             justify-content: center;
             min-height: 100vh;
-            color: #333; /* Darker text for readability on light background */
-            overflow: hidden; /* Prevents scrollbars from the aurora if it slightly exceeds viewport */
-            /* Soft, light animated gradient */
-            background: linear-gradient(160deg, #e0f7fa, #e8f5e9, #f3e5f5, #e1f5fe);
-            background-size: 300% 300%;
-            animation: lightGradientMove 25s ease infinite;
-            position: relative; /* For z-indexing of pseudo-elements if needed */
+            color: #EAE0D5;
+            overflow: hidden;
+            background: url('https://i.pinimg.com/originals/c7/47/66/c74766a3a4c58a5f8b955a50d2446a86.jpg') no-repeat center center fixed;
+            background-size: cover;
+            position: relative;
         }
 
-        @keyframes lightGradientMove {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-
-        .background-aurora {
-            position: fixed;
+        body::before {
+            content: '';
+            position: absolute;
             top: 0;
             left: 0;
-            width: 100%;
-            height: 100%;
-            overflow: hidden;
-            z-index: -1; /* Behind content */
-            pointer-events: none;
+            right: 0;
+            bottom: 0;
+            background: rgba(10, 25, 47, 0.8);
+            z-index: -1;
         }
 
-        .aurora-shape {
-            position: absolute;
-            border-radius: 50%;
-            opacity: 0; /* Start invisible */
-            filter: blur(80px); /* Heavy blur for soft shapes */
-            /* Using the simplified auroraFlow animation */
-            animation: auroraFlow 20s infinite ease-in-out;
-        }
-
-        .aurora-shape1 {
-            width: 40vw;
-            height: 40vw;
-            background: rgba(0, 229, 255, 0.15); /* Light Cyan/Blue */
-            top: 10%;
-            left: 10%;
-            animation-duration: 22s;
-            animation-delay: 0s;
-        }
-
-        .aurora-shape2 {
-            width: 50vw;
-            height: 50vw;
-            background: rgba(170, 100, 255, 0.1); /* Light Purple */
-            top: 50%;
-            left: 60%;
-            animation-duration: 25s;
-            animation-delay: -5s; /* Start partway through animation */
-        }
-
-        .aurora-shape3 {
-            width: 35vw;
-            height: 35vw;
-            background: rgba(100, 255, 200, 0.12); /* Light Teal/Green */
-            top: 30%;
-            left: 40%;
-            animation-duration: 20s;
-            animation-delay: -10s;
-        }
-
-        /* Simplified auroraFlow for CSS-only, as the other one hinted at JS vars */
-        @keyframes auroraFlow {
-            0% { transform: translate(-20vw, -20vh) scale(0.8); opacity: 0.2; }
-            25% { transform: translate(10vw, 0vh) scale(1.1); opacity: 0.35; }
-            50% { transform: translate(5vw, 15vh) scale(1); opacity: 0.4; }
-            75% { transform: translate(-10vw, 5vh) scale(1.2); opacity: 0.3; }
-            100% { transform: translate(-20vw, -20vh) scale(0.8); opacity: 0.2; }
+        @keyframes subtlePulse {
+            0%, 100% {
+                transform: scale(1);
+                text-shadow: 0 0 5px #ffcc00, 0 0 10px #ffcc00, 0 0 15px #ff8c00, 0 0 20px #ff8c00;
+            }
+            50% {
+                transform: scale(1.05);
+                text-shadow: 0 0 10px #ffcc00, 0 0 15px #ff8c00, 0 0 20px #ff8c00, 0 0 25px #ff4500;
+            }
         }
 
         header {
-            text-align: center; /* Ensure header content is centered */
+            text-align: center;
+            margin-bottom: 2rem;
         }
 
         h1 {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 3.8em;
-            color: #00796b; /* Dark Teal accent */
-            /* Subtle text shadow for depth, not a glow */
-            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1),
-                         0 0 10px rgba(0, 121, 107, 0.2);
+            font-family: 'IM Fell English SC', serif;
+            font-size: 4.5em;
+            color: #FFD700;
+            text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.7);
             animation: titleFadeIn 2s ease-out, subtlePulse 4s infinite ease-in-out 2s;
-            margin: 30px 20px;
-            letter-spacing: 3px;
+            margin: 20px;
+            letter-spacing: 4px;
             text-transform: uppercase;
         }
 
         @keyframes titleFadeIn {
-            from { opacity: 0; transform: translateY(-20px); }
+            from { opacity: 0; transform: translateY(-30px); }
             to { opacity: 1; transform: translateY(0); }
-        }
-
-        @keyframes subtlePulse {
-            0%, 100% { color: #00796b; text-shadow: 1px 1px 2px rgba(0,0,0,0.1), 0 0 10px rgba(0,121,107,0.2); }
-            50% { color: #009688; text-shadow: 1px 1px 2px rgba(0,0,0,0.1), 0 0 15px rgba(0,150,136,0.3); }
         }
 
         main {
             width: 100%;
             display: flex;
             justify-content: center;
-            padding: 0 15px; /* Add some padding to main for smaller screens */
-            box-sizing: border-box; /* Include padding in width calculation */
+            padding: 0 15px;
+            box-sizing: border-box;
         }
 
         .button-container {
@@ -129,124 +78,94 @@
             grid-template-columns: repeat(2, 1fr);
             gap: 25px;
             padding: 30px;
-            background: rgba(255, 255, 255, 0.6); /* Light, semi-transparent */
+            background: rgba(12, 12, 12, 0.6);
             border-radius: 20px;
-            backdrop-filter: blur(10px) saturate(150%); /* Frosted glass effect */
-            -webkit-backdrop-filter: blur(10px) saturate(150%); /* For Safari */
-            border: 1px solid rgba(0, 121, 107, 0.3); /* Subtle border */
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
-            max-width: 900px; /* Limit max width for very large screens */
-            width: 100%; /* Allow it to shrink */
+            backdrop-filter: blur(5px);
+            border: 2px solid #C0A080;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            max-width: 900px;
+            width: 100%;
         }
 
         button {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 1.7em;
+            font-family: 'IM Fell English SC', serif;
+            font-size: 1.8em;
             padding: 20px 30px;
-            border: 2px solid #009688; /* Accent color border */
+            border: none;
             border-radius: 12px;
-            background: transparent; /* Or a very light fill: rgba(0, 150, 136, 0.05) */
-            color: #00796b; /* Accent color text */
-            text-shadow: none; /* Clean text */
-            box-shadow: 0 4px 10px rgba(0, 150, 136, 0.1);
+            background-color: #D2B48C;
+            color: #5C4033;
+            text-shadow: 1px 1px 1px #FFFFFF;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
             position: relative;
             overflow: hidden;
-            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            transition: all 0.3s ease-in-out;
             cursor: pointer;
-            -webkit-tap-highlight-color: transparent; /* Remove tap highlight on mobile */
         }
 
         button:hover, button:focus {
-            background: #009688; /* Fill with accent color */
-            color: #ffffff; /* White text on hover */
-            transform: translateY(-3px) scale(1.02);
-            box-shadow: 0 8px 18px rgba(0, 150, 136, 0.3);
-            outline: none; /* Remove default focus outline if custom styles are sufficient */
+            background-color: #B8860B;
+            color: #FFFFFF;
+            text-shadow: 1px 1px 2px #000000;
+            transform: translateY(-5px) scale(1.03);
+            box-shadow: 0 8px 18px rgba(255, 215, 0, 0.4);
+            outline: none;
         }
 
-        button::before { /* Subtle light shimmer */
+        @keyframes burst {
+            0% { transform: scale(0); opacity: 0; }
+            50% { opacity: 1; }
+            100% { transform: scale(1.5); opacity: 0; }
+        }
+
+        button:hover::before {
             content: '';
             position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.5), transparent);
-            transform: rotate(35deg);
-            animation: lightShine 4s infinite linear;
-            opacity: 0;
-            transition: opacity 0.3s;
-            pointer-events: none; /* Ensure pseudo-element doesn't capture hover */
+            top: 50%;
+            left: 50%;
+            width: 20px;
+            height: 20px;
+            background: #FFD700;
+            border-radius: 50%;
+            animation: burst 0.8s ease-out;
         }
 
-        button:hover::before, button:focus::before {
-            opacity: 1;
-        }
-
-        @keyframes lightShine {
-            0% { transform: translateX(-100%) translateY(-25%) rotate(35deg); }
-            100% { transform: translateX(100%) translateY(25%) rotate(35deg); }
-        }
-
-        /* Responsive Adjustments */
         @media (max-width: 768px) {
             h1 {
-                font-size: 2.6em;
-                letter-spacing: 2px;
-                margin: 25px;
-            }
-            button {
-                font-size: 1.4em;
-                padding: 18px 25px;
+                font-size: 3em;
             }
             .button-container {
-                grid-template-columns: 1fr; /* Stack buttons vertically */
-                gap: 20px;
-                padding: 25px;
-                margin: 0 20px; /* Ensure some margin from screen edges */
+                grid-template-columns: 1fr;
             }
-            .aurora-shape { filter: blur(60px); }
-            .aurora-shape1 { width: 60vw; height: 60vw; }
-            .aurora-shape2 { width: 70vw; height: 70vw; }
-            .aurora-shape3 { width: 55vw; height: 55vw; }
+            button {
+                font-size: 1.5em;
+                padding: 18px 25px;
+            }
         }
 
         @media (max-width: 480px) {
             h1 {
-                font-size: 2.0em;
-                letter-spacing: 1.5px;
-                margin: 20px 15px; /* Adjust margin for smaller screens */
+                font-size: 2.2em;
             }
             button {
-                font-size: 1.15em;
+                font-size: 1.2em;
                 padding: 15px 20px;
             }
-            .button-container {
-                gap: 15px;
-                padding: 20px;
-                margin: 0 15px; /* Adjust margin for smaller screens */
-            }
-            .aurora-shape { filter: blur(40px); } /* Reduce blur for smaller screens if too much */
         }
     </style>
 </head>
 <body>
-    <div class="background-aurora">
-        <div class="aurora-shape aurora-shape1"></div>
-        <div class="aurora-shape aurora-shape2"></div>
-        <div class="aurora-shape aurora-shape3"></div>
-    </div>
     <header>
-        <h1>BCA 2nd [3 Sem]</h1>
+        <h1>BCA Grand Line</h1>
     </header>
     <main>
         <div class="button-container">
-            <button onclick="redirectTo('mathematics.html')">🧮 Mathematics</button>
-            <button onclick="redirectTo('c++.html')">💻 C++ Programming</button>
-            <button onclick="redirectTo('English.html')">📖 English</button>
+            <button onclick="redirectTo('mathematics.html')">🧭 Mathematics</button>
+            <button onclick="redirectTo('c++.html')">⚙️ C++ Programming</button>
+            <button onclick="redirectTo('English.html')">📜 English</button>
             <button onclick="redirectTo('Computer-Architecture.html')">🔩 Computer Architecture</button>
-            <button onclick="redirectTo('MIS.html')">📊 MIS</button>
-            <button onclick="redirectTo('Punjabi.html')">🎤 Punjabi</button>
+            <button onclick="redirectTo('MIS.html')">📈 MIS</button>
+            <button onclick="redirectTo('Punjabi.html')">🌊 Punjabi</button>
         </div>
     </main>
     <script>
@@ -257,25 +176,19 @@
                 window.location.href = url;
             }, 500);
         }
-
-        // Optional: Add a smooth transition back when the page loads
-        // This helps if the user navigates back to this page
         window.addEventListener('pageshow', function(event) {
-            // Check if the page is being loaded from the cache (e.g., back button)
             if (event.persisted) {
-                document.body.style.transition = 'none'; // Remove transition for instant show
-                document.body.style.opacity = '1'; // Ensure it's visible
-                // Re-apply transition for future navigations
+                document.body.style.transition = 'none';
+                document.body.style.opacity = '1';
                 setTimeout(() => {
                     document.body.style.transition = 'opacity 0.5s ease-out';
                 }, 0);
             } else {
-                 // For initial load, fade in if you want a consistent feel
-                document.body.style.opacity = '0';
+                 document.body.style.opacity = '0';
                 setTimeout(() => {
                     document.body.style.transition = 'opacity 0.5s ease-in';
                     document.body.style.opacity = '1';
-                }, 50); // Short delay to ensure styles are applied
+                }, 50);
             }
         });
     </script>
