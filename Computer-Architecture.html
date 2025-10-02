@@ -3,118 +3,133 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>One Piece - Computer Architecture</title>
-    <link href="https://fonts.googleapis.com/css2?family=Bangers&display=swap" rel="stylesheet">
+    <title>Computer Architecture Hub</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
     <style>
+        /* General Body Styling */
         body {
-            font-family: 'Bangers', cursive;
+            font-family: 'Roboto', sans-serif;
             text-align: center;
-            background: url('https://wallpapercave.com/wp/wp12528100.jpg') no-repeat center center fixed;
-            background-size: cover;
+            background: #0f0c29;
+            background: -webkit-linear-gradient(to right, #24243e, #302b63, #0f0c29);
+            background: linear-gradient(to right, #24243e, #302b63, #0f0c29);
             color: #ffffff;
             margin: 0;
             padding: 20px;
             overflow-x: hidden;
         }
 
+        /* Header and Title Styling */
         header {
-            background: rgba(0, 0, 0, 0.7);
             padding: 20px;
             border-radius: 20px;
-            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
-            text-transform: uppercase;
-            animation: glow-header 1.5s ease-out infinite alternate;
-            border: 2px solid #FFD700;
+            margin-bottom: 30px;
         }
 
         h1 {
             font-size: 4em;
-            color: #FFD700;
-            text-shadow: 3px 3px 0 #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+            font-weight: 700;
+            background: linear-gradient(90deg, #6a82fb, #fc5c7d);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            -webkit-text-fill-color: transparent;
+            animation: fadeInDown 1s ease-out;
         }
 
+        /* Content Section Styling */
         section {
-            margin: 30px 0;
+            margin: 30px auto;
             padding: 20px;
-            background: rgba(0, 0, 0, 0.6);
+            background: rgba(255, 255, 255, 0.1);
             border-radius: 20px;
-            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
-            animation: float 3s ease-in-out infinite;
-            border: 2px solid #6A5ACD;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+            max-width: 900px;
+            animation: fadeInUp 1s ease-out;
         }
+        
+        /* Staggered animation for sections */
+        section:nth-of-type(1) { animation-delay: 0.2s; }
+        section:nth-of-type(2) { animation-delay: 0.4s; }
+        section:nth-of-type(3) { animation-delay: 0.6s; }
+
 
         h2 {
-            font-size: 3em;
-            color: #ff4500;
-            text-shadow: 2px 2px 0 #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
-            animation: shake 0.82s cubic-bezier(.36,.07,.19,.97) both infinite;
+            font-size: 2.5em;
+            color: #f0f0f0;
+            margin-bottom: 20px;
         }
 
+        /* Button Styling and Hover Effects */
         .big-button {
-            font-family: 'Bangers', cursive;
-            font-size: 1.5em;
-            padding: 15px 35px;
-            margin: 15px;
-            background: linear-gradient(90deg, #ff4500, #ffa500);
+            font-family: 'Roboto', sans-serif;
+            font-size: 1.2em;
+            padding: 15px 30px;
+            margin: 10px;
+            background: rgba(255, 255, 255, 0.15);
             color: #ffffff;
-            border: 3px solid #000;
+            border: 1px solid rgba(255, 255, 255, 0.3);
             border-radius: 12px;
             cursor: pointer;
-            transition: transform 0.3s ease, background 0.3s ease, box-shadow 0.3s;
-            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
-            text-shadow: 2px 2px 4px #000000;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
         }
 
         .big-button:hover {
-            background: linear-gradient(90deg, #ffa500, #ff4500);
-            transform: scale(1.1) rotate(5deg);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+            background: rgba(255, 255, 255, 0.25);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
         }
 
-        @keyframes glow-header {
-            0% {
-                box-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
-            }
-            100% {
-                box-shadow: 0 0 20px rgba(255, 215, 0, 1);
-            }
+        /* Shimmer effect on hover */
+        .big-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: left 0.5s ease;
         }
 
-        @keyframes float {
-            0% {
-                transform: translatey(0px);
-            }
-            50% {
-                transform: translatey(-10px);
-            }
-            100% {
-                transform: translatey(0px);
-            }
+        .big-button:hover::before {
+            left: 100%;
         }
 
-        @keyframes shake {
-            10%, 90% {
-                transform: translate3d(-1px, 0, 0);
+        /* Animations */
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
             }
-            20%, 80% {
-                transform: translate3d(2px, 0, 0);
-            }
-            30%, 50%, 70% {
-                transform: translate3d(-4px, 0, 0);
-            }
-            40%, 60% {
-                transform: translate3d(4px, 0, 0);
+            to {
+                opacity: 1;
+                transform: translateY(0);
             }
         }
 
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Footer Styling */
         footer {
             margin-top: 30px;
             padding: 15px;
-            background: rgba(0, 0, 0, 0.7);
+            background: rgba(0, 0, 0, 0.5);
             border-radius: 20px;
-            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
-            color: #FFD700;
-            border: 2px solid #FFD700;
+            color: #cccccc;
         }
         
         /* Responsive Design */
@@ -126,8 +141,9 @@
                 font-size: 2em;
             }
             .big-button {
-                font-size: 1.2em;
-                padding: 10px 25px;
+                font-size: 1.1em;
+                padding: 12px 25px;
+                width: calc(50% - 20px); /* Two buttons per row */
             }
         }
 
@@ -141,43 +157,42 @@
             .big-button {
                 font-size: 1em;
                 padding: 10px 20px;
-                width: 90%;
+                width: 90%; /* One button per row */
             }
         }
     </style>
 </head>
 <body>
     <header>
-        <h1>One Piece - Grand Line of Computer Architecture</h1>
+        <h1>Computer Architecture Hub</h1>
     </header>
 
     <section id="video-section">
-        <h2>Log Pose to Knowledge (Videos)</h2>
+        <h2>Video Lectures</h2>
         <div id="video-buttons"></div>
     </section>
 
     <section id="reading-section">
-        <h2>Theory</h2>
+        <h2>Reading Materials</h2>
         <div id="reading-buttons"></div>
     </section>
 
     <section id="pdf-list">
-        <h2>Ancient Blueprints (PDFs)</h2>
+        <h2>Downloadable PDFs</h2>
         <div id="pdf-buttons"></div>
     </section>
     
     <footer>
-        <p>Set sail on your adventure through Computer Architecture!</p>
+        <p>Start your journey into the world of Computer Architecture!</p>
     </footer>
 
     <script>
-        // List of video links
+        // Data arrays for links remain the same.
         const videoLinks = [
             { name: 'Computer Organization and Architecture [Playlist]', url: 'https://youtube.com/playlist?list=PLxCzCOWd7aiHMonh3G6QNKq53C6oNXGrX&si=GH7gA_HejLMJSO3V' },
             { name: 'COA [One shot]', url: 'https://www.youtube.com/watch?v=1rUevQ3bSEY' },
         ];
 
-        // List of reading materials
         const readingLinks = [
             { name: 'Instruction Format', url: 'https://www.geeksforgeeks.org/computer-organization-instruction-formats-zero-one-two-three-address-instruction/' },
             { name: 'Risc and Cisc', url: 'https://www.geeksforgeeks.org/computer-organization-risc-and-cisc/' },
@@ -185,18 +200,17 @@
             { name: 'Class of Register', url: 'https://www.geeksforgeeks.org/different-classes-of-cpu-registers/'},
         ];
 
-        // List of PDF resources
         const pdfLinks = [
-            { name: '1. Basic Architecture of Computer', url:'https://drive.google.com/file/d/1y4N9E6LWARFdJp8HDEgywUY1lLQRdBl6/view'},
+            { name: '1. Basic Architecture', url:'https://drive.google.com/file/d/1y4N9E6LWARFdJp8HDEgywUY1lLQRdBl6/view'},
             { name: '2. CPU Organisation', url:'https://drive.google.com/file/d/1a-9ydYqpDwH84Eoxof-7JCqgACGxaHcn/view'},
-            { name: '3. Instruction Set Architecture', url:'https://drive.google.com/file/d/1cf8_OJB92xZylxE2C7Hu-cLDLueu4mVr/view'},
+            { name: '3. Instruction Set', url:'https://drive.google.com/file/d/1cf8_OJB92xZylxE2C7Hu-cLDLueu4mVr/view'},
             { name: '4. RISC and CISC', url:'https://drive.google.com/file/d/1WoenUVYMUsXGGnK2ztdHgqi13R6y4q3D/view'},
             { name: '5. Memory Organisation', url:'https://drive.google.com/file/d/1RUKPKyhxYRZwawMfI_xcdC6B2nkA6w_4/view'},
-            { name: '6. Register Transfer and Micro Operations', url:'https://drive.google.com/file/d/1MSnNrz0QxhjuL_2cD0_gACJ9BKs-wsOQ/view'},
-            { name: '7. Arithmetic Logic Shift Unit', url:'https://drive.google.com/file/d/1UWhsnfGka43c4q1GSvCnCN-hgNnUl7Nl/view'},
-            { name: '8. Control Unit Design', url:'https://drive.google.com/file/d/1GH0DySYMuACuYJ_ci1A17dcxcvpxnFE7/view'},
-            { name: '9. Input Output Organization', url:'https://drive.google.com/file/d/1msKKcAHz3hN446A-ppFVjmJJ6xK-6_66/view'},
-            { name: '10. Asynchronous Data Transfer', url:'https://drive.google.com/file/d/1sMAP_t-F698cGNtwiCKgPAaAwklCxK6Z/view'},
+            { name: '6. Register Transfer', url:'https://drive.google.com/file/d/1MSnNrz0QxhjuL_2cD0_gACJ9BKs-wsOQ/view'},
+            { name: '7. ALU', url:'https://drive.google.com/file/d/1UWhsnfGka43c4q1GSvCnCN-hgNnUl7Nl/view'},
+            { name: '8. Control Unit', url:'https://drive.google.com/file/d/1GH0DySYMuACuYJ_ci1A17dcxcvpxnFE7/view'},
+            { name: '9. I/O Organization', url:'https://drive.google.com/file/d/1msKKcAHz3hN446A-ppFVjmJJ6xK-6_66/view'},
+            { name: '10. Async Data Transfer', url:'https://drive.google.com/file/d/1sMAP_t-F698cGNtwiCKgPAaAwklCxK6Z/view'},
         ];
 
         // Function to create buttons
@@ -212,17 +226,10 @@
             });
         }
 
-        // Create video buttons
-        const videoButtonsContainer = document.getElementById('video-buttons');
-        createButtons(videoLinks, videoButtonsContainer);
-
-        // Create reading material buttons
-        const readingButtonsContainer = document.getElementById('reading-buttons');
-        createButtons(readingLinks, readingButtonsContainer);
-
-        // Create PDF buttons
-        const pdfButtonsContainer = document.getElementById('pdf-buttons');
-        createButtons(pdfLinks, pdfButtonsContainer);
+        // Populate buttons
+        createButtons(videoLinks, document.getElementById('video-buttons'));
+        createButtons(readingLinks, document.getElementById('reading-buttons'));
+        createButtons(pdfLinks, document.getElementById('pdf-buttons'));
     </script>
 </body>
 </html>
