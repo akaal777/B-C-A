@@ -2,50 +2,621 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>C++ Programming </title>
-    <link rel="stylesheet" href="c++.css">
-    <script src="https://kit.fontawesome.com/your-fontawesome-kit.js" crossorigin="anonymous"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="theme-color" content="#f2f2f7" media="(prefers-color-scheme: light)">
+    <meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)">
+    <title>C++ Programming</title>
+    <style>
+        :root {
+            --bg: #f2f2f7;
+            --card: #ffffff;
+            --label: #000000;
+            --secondary: #8a8a8e;
+            --separator: rgba(60, 60, 67, 0.18);
+            --highlight: rgba(60, 60, 67, 0.08);
+            --blue: #007aff;
+            --bar: rgba(242, 242, 247, 0.78);
+            --spring: cubic-bezier(0.32, 0.72, 0, 1);
+        }
+
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg: #000000;
+                --card: #1c1c1e;
+                --label: #ffffff;
+                --secondary: #98989f;
+                --separator: rgba(84, 84, 88, 0.55);
+                --highlight: rgba(235, 235, 245, 0.1);
+                --blue: #0a84ff;
+                --bar: rgba(0, 0, 0, 0.72);
+            }
+        }
+
+        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
+        html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
+
+        body {
+            margin: 0;
+            font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'SF Pro Display', 'Helvetica Neue', 'Segoe UI', Roboto, Arial, sans-serif;
+            font-size: 17px;
+            line-height: 1.3;
+            letter-spacing: -0.022em;
+            background: var(--bg);
+            color: var(--label);
+            -webkit-font-smoothing: antialiased;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* ---------- Sticky translucent nav bar ---------- */
+        .navbar {
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            height: calc(44px + env(safe-area-inset-top));
+            padding-top: env(safe-area-inset-top);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--bar);
+            -webkit-backdrop-filter: saturate(180%) blur(22px);
+            backdrop-filter: saturate(180%) blur(22px);
+            border-bottom: 0.5px solid transparent;
+            transition: border-color 0.25s ease;
+        }
+
+        .navbar.scrolled { border-bottom-color: var(--separator); }
+
+        .navbar .nav-title {
+            font-size: 17px;
+            font-weight: 600;
+            opacity: 0;
+            transform: translateY(6px);
+            transition: opacity 0.25s ease, transform 0.35s var(--spring);
+        }
+
+        .navbar.scrolled .nav-title { opacity: 1; transform: translateY(0); }
+
+        /* ---------- Large title ---------- */
+        .wrap {
+            width: 100%;
+            max-width: 700px;
+            margin: 0 auto;
+            padding: 0 max(16px, env(safe-area-inset-left)) 0 max(16px, env(safe-area-inset-right));
+        }
+
+        .large-title { padding: 4px 4px 14px; animation: titleIn 0.7s var(--spring) both; }
+
+        .large-title h1 {
+            margin: 0;
+            font-size: clamp(32px, 8vw, 40px);
+            font-weight: 700;
+            letter-spacing: -0.03em;
+            line-height: 1.1;
+        }
+
+        .large-title p { margin: 6px 0 0; color: var(--secondary); font-size: 15px; }
+
+        main { flex: 1; padding-bottom: 12px; }
+
+        /* ---------- Grouped sections ---------- */
+        section { margin-bottom: 28px; }
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(18px) scale(0.985);
+            transition: opacity 0.6s ease, transform 0.7s var(--spring);
+        }
+
+        .reveal.in { opacity: 1; transform: none; }
+
+        h2 {
+            margin: 0 0 7px 16px;
+            font-size: 13px;
+            font-weight: 400;
+            letter-spacing: -0.01em;
+            text-transform: uppercase;
+            color: var(--secondary);
+        }
+
+        .list {
+            background: var(--card);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .row {
+            position: relative;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            width: 100%;
+            min-height: 48px;
+            padding: 9px 12px 9px 16px;
+            color: var(--label);
+            text-decoration: none;
+            font: inherit;
+            letter-spacing: inherit;
+            text-align: left;
+            border: 0;
+            background: transparent;
+            cursor: pointer;
+            transition: background-color 0.25s ease, transform 0.35s var(--spring);
+        }
+
+        /* separator lines: between direct rows and between media items */
+        .row + .row::before,
+        .item + .item > .row::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 60px;
+            right: 0;
+            height: 0.5px;
+            background: var(--separator);
+        }
+
+        .row:hover { background: var(--highlight); }
+
+        .row:active {
+            background: var(--highlight);
+            transform: scale(0.98);
+            transition-duration: 0.08s;
+        }
+
+        .row:focus-visible { outline: 2px solid var(--blue); outline-offset: -2px; }
+
+        .icon {
+            flex: none;
+            width: 30px;
+            height: 30px;
+            border-radius: 7px;
+            display: grid;
+            place-items: center;
+            font-size: 16px;
+            color: #fff;
+            transition: transform 0.4s var(--spring);
+        }
+
+        .row:hover .icon { transform: scale(1.08) rotate(-3deg); }
+
+        .name { flex: 1; min-width: 0; overflow-wrap: anywhere; }
+
+        .chev {
+            flex: none;
+            width: 8px;
+            height: 14px;
+            color: var(--secondary);
+            opacity: 0.6;
+            transition: transform 0.35s var(--spring), opacity 0.25s ease;
+        }
+
+        .row:hover .chev { transform: translateX(3px); opacity: 1; }
+
+        /* row entrance stagger */
+        .row { animation: rowIn 0.5s var(--spring) both; animation-delay: calc(var(--i) * 45ms); }
+
+        /* ---------- Expandable media items (playlists & one-shot videos) ---------- */
+        .item.open > .row .chev { transform: rotate(90deg); opacity: 1; }
+        .item.open > .row:hover .chev { transform: rotate(90deg); }
+
+        .panel {
+            display: grid;
+            grid-template-rows: 0fr;
+            transition: grid-template-rows 0.45s var(--spring);
+        }
+
+        .item.open > .panel { grid-template-rows: 1fr; }
+
+        .panel-inner {
+            overflow: hidden;
+            min-height: 0;
+            visibility: hidden;
+            transition: visibility 0s linear 0.45s;
+        }
+
+        .item.open > .panel > .panel-inner {
+            visibility: visible;
+            transition-delay: 0s;
+        }
+
+        .panel-body { padding: 4px 16px 16px; }
+
+        .thumb {
+            position: relative;
+            aspect-ratio: 16 / 9;
+            border-radius: 12px;
+            overflow: hidden;
+            background: linear-gradient(135deg, #2c2c2e, #111);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.18);
+            opacity: 0;
+            transform: scale(0.96);
+            transition: opacity 0.4s ease, transform 0.5s var(--spring);
+        }
+
+        .item.open .thumb { opacity: 1; transform: none; transition-delay: 0.08s; }
+
+        .thumb img {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+
+        .thumb img.loaded { opacity: 1; }
+
+        .thumb iframe {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            border: 0;
+        }
+
+        /* Play button: appears after the thumbnail */
+        .play {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 68px;
+            height: 68px;
+            border: 0;
+            padding: 0;
+            border-radius: 50%;
+            display: grid;
+            place-items: center;
+            color: #fff;
+            cursor: pointer;
+            background: rgba(30, 30, 32, 0.55);
+            -webkit-backdrop-filter: blur(14px) saturate(180%);
+            backdrop-filter: blur(14px) saturate(180%);
+            box-shadow: 0 4px 18px rgba(0, 0, 0, 0.35), inset 0 0 0 0.5px rgba(255, 255, 255, 0.35);
+            opacity: 0;
+            transform: translate(-50%, -50%) scale(0.5);
+            transition: opacity 0.35s ease, transform 0.5s var(--spring), background-color 0.25s ease;
+        }
+
+        .item.open .play {
+            opacity: 1;
+            transform: translate(-50%, -50%) scale(1);
+            transition-delay: 0.35s, 0.35s, 0s;
+        }
+
+        .item.open .play:hover { background: rgba(255, 59, 48, 0.9); transform: translate(-50%, -50%) scale(1.08); transition-delay: 0s; }
+        .item.open .play:active { transform: translate(-50%, -50%) scale(0.94); transition-duration: 0.1s; transition-delay: 0s; }
+        .play:focus-visible { outline: 3px solid var(--blue); outline-offset: 3px; }
+
+        .play svg { width: 28px; height: 28px; margin-left: 4px; }
+
+        .thumb.playing .play,
+        .thumb.playing img { display: none; }
+
+        .yt-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            margin-top: 12px;
+            color: var(--blue);
+            font-size: 15px;
+            text-decoration: none;
+        }
+
+        .yt-link:hover { text-decoration: underline; }
+
+        /* icon colours (iOS system palette) */
+        .c-red    { background: #ff3b30; }
+        .c-orange { background: #ff9500; }
+        .c-green  { background: #34c759; }
+        .c-blue   { background: #007aff; }
+        .c-purple { background: #af52de; }
+
+        footer {
+            text-align: center;
+            padding: 8px 16px calc(24px + env(safe-area-inset-bottom));
+            color: var(--secondary);
+            font-size: 13px;
+        }
+
+        footer p { margin: 0; }
+
+        @keyframes titleIn {
+            from { opacity: 0; transform: translateY(14px); }
+            to   { opacity: 1; transform: none; }
+        }
+
+        @keyframes rowIn {
+            from { opacity: 0; transform: translateX(-10px); }
+            to   { opacity: 1; transform: none; }
+        }
+
+        @media (min-width: 700px) {
+            .wrap { padding-left: 24px; padding-right: 24px; }
+        }
+
+        @media (max-width: 380px) {
+            .play { width: 56px; height: 56px; }
+            .play svg { width: 24px; height: 24px; }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+            .reveal { opacity: 1; transform: none; }
+        }
+    </style>
 </head>
 <body>
-    <header>
-        <h1 class="animate-header">C++ Programming</h1>
-    </header>
-    <main>
-        <section id="playlists-section">
-            <h2>Playlists</h2>
-            <div id="playlist-list">
-                <!-- Playlists will be dynamically added here as buttons -->
-            </div>
-        </section>
-        <section id="notes-section">
-            <h2> Notes, Cheatsheets, Projects</h2>
-            <div id="notes-list">
-                <!-- Notes will be dynamically added here as buttons -->
-            </div>
-        </section>
-        <section id="videos-section">
-            <h2>One shot Videos</h2>
-            <div id="video-list">
-                <!-- Videos will be dynamically added here as buttons -->
-            </div>
-        </section>
-        <section id="related-info-section">
-            <h2>Theory Related Information</h2>
-            <div id="related-info-list">
-                <!-- Related information will be dynamically added here as buttons -->
-            </div>
-        </section>
-        <section id="books-section">
-            <h2>Recommended Books</h2>
-            <div id="book-list">
-                <!-- Books will be dynamically added here as buttons -->
-            </div>
-        </section>
-    </main>
-    <footer>
-        <p>Created by Khushpreet</p>
-    </footer>
-    <script src="c++-.js"></script>
+    <nav class="navbar" id="navbar" aria-label="Page title">
+        <span class="nav-title">C++ Programming</span>
+    </nav>
+
+    <div class="wrap">
+        <header class="large-title">
+            <h1>C++ Programming</h1>
+            <p>Curated learning resources</p>
+        </header>
+
+        <main>
+            <section id="playlists-section" class="reveal">
+                <h2>Playlists</h2>
+                <div id="playlist-list" class="list"></div>
+            </section>
+
+            <section id="notes-section" class="reveal">
+                <h2>Notes, Cheatsheets, Projects</h2>
+                <div id="notes-list" class="list"></div>
+            </section>
+
+            <section id="videos-section" class="reveal">
+                <h2>One Shot Videos</h2>
+                <div id="video-list" class="list"></div>
+            </section>
+
+            <section id="related-info-section" class="reveal">
+                <h2>Theory Related Information</h2>
+                <div id="related-info-list" class="list"></div>
+            </section>
+
+            <section id="books-section" class="reveal">
+                <h2>Recommended Books</h2>
+                <div id="book-list" class="list"></div>
+            </section>
+        </main>
+
+        <footer>
+            <p>Created by Khushpreet</p>
+        </footer>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const playlists = [
+                { name: "C++ [Apna-college]", url: "https://youtube.com/playlist?list=PLfqMhTWNBTe0b2nM6JHVCnAkhQRGiZMSJ&si=g1ObTg1SL7QyNFFs" },
+                { name: "C++ [Code with harry]", url: "https://youtube.com/playlist?list=PLu0W_9lII9agpFUAlPFe_VNSlXW5uE0YL&si=yhu_ktYFAf5wYQTB" },
+                { name: "C++ [Learn Coding]", url: "https://youtube.com/playlist?list=PLqleLpAMfxGDq9Ehl8FUstcRrCRQPQO7n&si=RCS_mU1bi527YJ6i" },
+                { name: "C++ [Happy Coding With Prishu]", url: "https://youtube.com/playlist?list=PLG6NoBpoBh44rYAAOx2JM1NNDb2jde1OH&si=qCUjFSHMvoV42xgZ" }
+            ];
+
+            const videos = [
+                { name: "C++ [Coding seekho]", url: "https://youtu.be/ZzRT6pyROz4?si=Fq7SQD7cGbZqHCF4" },
+                { name: "C++ [Learn coding]", url: "https://youtu.be/HME2SrWWSYk?si=76opJ3Z9ptIGsofS" },
+                { name: "C++ [Apna-college]", url: "https://youtu.be/mlIUKyZIUUU?si=FdAWt1pVkOIEs-uE" },
+                { name: "C++ [Code with harry]", url: "https://youtu.be/yGB9jhsEsr8?si=RjAtWz63DmCIJgs4" },
+                { name: "C++ [College wallah]", url: "https://youtu.be/e7sAf4SbS_g?si=mjAhnI9fPnnMHJPJ" },
+                { name: "C++ [5 min Engineering]", url: "https://www.youtube.com/watch?v=eWHzz-WHQh4" },
+                { name: "C++ [Not your college]", url: "https://youtu.be/LAK-VFr9rFc?si=PlUGOQ4Ahu87Sf5s" },
+                { name: "C++ [Bro Code]", url: "https://youtu.be/-TkoO8Z07hI?si=zDSmLgHhQu6yZWpI" }
+            ];
+
+            const relatedInfo = [
+                { name: "C++ [W3 schools]", url: "https://www.w3schools.com/cpp/cpp_intro.asp" },
+                { name: "C++ [Geeks for Geeks]", url: "https://www.geeksforgeeks.org/c-plus-plus/" },
+                { name: "C++ [Javatpoint]", url: "https://www.javatpoint.com/cpp-tutorial" },
+                { name: "C++ [Code with harry]", url: "https://www.codewithharry.com/tutorial/cplusplus/" },
+                { name: "C++", url: "https://cplusplus.com/doc/tutorial/" }
+            ];
+
+            const notes = [
+                { name: "C++ Cheatsheet", url: "https://www.codewithharry.com/blogpost/cpp-cheatsheet/" },
+                { name: "C++ CheetSheet[github]", url: "https://github.com/EbookFoundation/free-programming-books/blob/main/more/free-programming-cheatsheets.md" },
+                { name: "C++ Projects", url: "https://www.interviewbit.com/blog/cpp-projects/" },
+                { name: "C++ Programs", url: "https://www.sanfoundry.com/cpp-programs/" },
+                { name: "C++ Notes", url: "https://drive.google.com/file/d/1uucE6DVdhbbUSoNUb4-ul32cCpD4ezlN/view" }
+            ];
+
+            const books = [
+                { name: "C++ Book [Richard l Halterman]", url: "https://web.archive.org/web/20191005170118/https://python.cs.southern.edu/cppbook/progcpp.pdf" },
+                { name: "C++ Book [Tutorialspoint]", url: "https://www.tutorialspoint.com/cplusplus/cpp_tutorial.pdf" },
+                { name: "C++ Book [Stack Overflow]", url: "https://riptutorial.com/Download/cplusplus.pdf" }
+            ];
+
+            const chevron = '<svg class="chev" viewBox="0 0 8 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M1 1l6 6-6 6"/></svg>';
+            const playIcon = '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 4.5v15a1 1 0 0 0 1.52.85l12-7.5a1 1 0 0 0 0-1.7l-12-7.5A1 1 0 0 0 7 4.5z"/></svg>';
+
+            /* ---------- Plain link rows (notes, theory, books) ---------- */
+            function renderRows(list, elementId, rowClass, symbol, colour) {
+                const container = document.getElementById(elementId);
+                container.innerHTML = '';
+                list.forEach((item, i) => {
+                    const a = document.createElement('a');
+                    a.className = 'row ' + rowClass;
+                    a.href = item.url;
+                    a.target = '_blank';
+                    a.rel = 'noopener noreferrer';
+                    a.style.setProperty('--i', i);
+                    a.innerHTML =
+                        '<span class="icon ' + colour + '" aria-hidden="true">' + symbol + '</span>' +
+                        '<span class="name"></span>' + chevron;
+                    a.querySelector('.name').textContent = item.name;
+                    container.appendChild(a);
+                });
+            }
+
+            /* ---------- Helpers for YouTube links ---------- */
+            function getVideoId(url) {
+                try {
+                    const u = new URL(url);
+                    if (u.hostname === 'youtu.be') return u.pathname.slice(1);
+                    return u.searchParams.get('v');
+                } catch (e) { return null; }
+            }
+
+            function getPlaylistId(url) {
+                try { return new URL(url).searchParams.get('list'); }
+                catch (e) { return null; }
+            }
+
+            function embedUrl(kind, id) {
+                const base = 'https://www.youtube-nocookie.com/embed/';
+                const opts = 'autoplay=1&rel=0&playsinline=1';
+                return kind === 'playlist'
+                    ? base + 'videoseries?list=' + encodeURIComponent(id) + '&' + opts
+                    : base + encodeURIComponent(id) + '?' + opts;
+            }
+
+            function loadThumbnail(kind, id, url, img) {
+                const done = (src) => {
+                    img.onload = () => img.classList.add('loaded');
+                    img.src = src;
+                };
+                if (kind === 'video') {
+                    done('https://i.ytimg.com/vi/' + id + '/hqdefault.jpg');
+                    return;
+                }
+                // Playlists: ask YouTube's oEmbed endpoint for the cover thumbnail
+                const playlistUrl = 'https://www.youtube.com/playlist?list=' + id;
+                fetch('https://www.youtube.com/oembed?format=json&url=' + encodeURIComponent(playlistUrl))
+                    .then((r) => r.ok ? r.json() : Promise.reject())
+                    .then((data) => { if (data.thumbnail_url) done(data.thumbnail_url); })
+                    .catch(() => { /* keep dark placeholder; play button still works */ });
+            }
+
+            /* ---------- Expandable media rows (playlists & one-shot videos) ---------- */
+            function resetThumb(item) {
+                const thumb = item.querySelector('.thumb');
+                const frame = thumb.querySelector('iframe');
+                if (frame) frame.remove();
+                thumb.classList.remove('playing');
+            }
+
+            function renderMedia(list, elementId, kind, symbol, colour) {
+                const container = document.getElementById(elementId);
+                container.innerHTML = '';
+
+                list.forEach((data, i) => {
+                    const id = kind === 'playlist' ? getPlaylistId(data.url) : getVideoId(data.url);
+
+                    const item = document.createElement('div');
+                    item.className = 'item';
+
+                    const toggle = document.createElement('button');
+                    toggle.type = 'button';
+                    toggle.className = 'row ' + kind + '-button';
+                    toggle.style.setProperty('--i', i);
+                    toggle.setAttribute('aria-expanded', 'false');
+                    toggle.innerHTML =
+                        '<span class="icon ' + colour + '" aria-hidden="true">' + symbol + '</span>' +
+                        '<span class="name"></span>' + chevron;
+                    toggle.querySelector('.name').textContent = data.name;
+
+                    const panel = document.createElement('div');
+                    panel.className = 'panel';
+                    panel.innerHTML =
+                        '<div class="panel-inner"><div class="panel-body">' +
+                            '<div class="thumb">' +
+                                '<img alt="" loading="lazy" decoding="async">' +
+                                '<button type="button" class="play" aria-label="Play"></button>' +
+                            '</div>' +
+                            '<a class="yt-link" target="_blank" rel="noopener noreferrer">Open on YouTube ›</a>' +
+                        '</div></div>';
+
+                    const thumb = panel.querySelector('.thumb');
+                    const img = panel.querySelector('img');
+                    const playBtn = panel.querySelector('.play');
+                    const link = panel.querySelector('.yt-link');
+
+                    img.alt = data.name + ' thumbnail';
+                    playBtn.innerHTML = playIcon;
+                    playBtn.setAttribute('aria-label', 'Play ' + data.name);
+                    link.href = data.url;
+
+                    let thumbLoaded = false;
+
+                    toggle.addEventListener('click', () => {
+                        const opening = !item.classList.contains('open');
+
+                        // Close any other open item in this list
+                        container.querySelectorAll('.item.open').forEach((other) => {
+                            if (other !== item) {
+                                other.classList.remove('open');
+                                other.querySelector('.row').setAttribute('aria-expanded', 'false');
+                                resetThumb(other);
+                            }
+                        });
+
+                        item.classList.toggle('open', opening);
+                        toggle.setAttribute('aria-expanded', String(opening));
+
+                        if (opening) {
+                            if (!thumbLoaded && id) {
+                                thumbLoaded = true;
+                                loadThumbnail(kind, id, data.url, img);
+                            }
+                        } else {
+                            resetThumb(item);
+                        }
+                    });
+
+                    playBtn.addEventListener('click', () => {
+                        if (!id) { window.open(data.url, '_blank', 'noopener'); return; }
+                        const frame = document.createElement('iframe');
+                        frame.src = embedUrl(kind, id);
+                        frame.title = data.name;
+                        frame.allow = 'autoplay; encrypted-media; picture-in-picture; fullscreen';
+                        frame.allowFullscreen = true;
+                        frame.referrerPolicy = 'strict-origin-when-cross-origin';
+                        thumb.appendChild(frame);
+                        thumb.classList.add('playing');
+                    });
+
+                    item.appendChild(toggle);
+                    item.appendChild(panel);
+                    container.appendChild(item);
+                });
+            }
+
+            renderMedia(playlists, 'playlist-list', 'playlist', '▶', 'c-red');
+            renderRows(notes,       'notes-list',        'notes-button',        '✎', 'c-orange');
+            renderMedia(videos,    'video-list',    'video',    '●', 'c-purple');
+            renderRows(relatedInfo, 'related-info-list', 'related-info-button', 'i', 'c-blue');
+            renderRows(books,       'book-list',         'book-button',         '❒', 'c-green');
+
+            /* ---------- Scroll reveal for sections ---------- */
+            const sections = document.querySelectorAll('.reveal');
+            if ('IntersectionObserver' in window) {
+                const io = new IntersectionObserver((entries) => {
+                    entries.forEach((entry) => {
+                        if (entry.isIntersecting) {
+                            entry.target.classList.add('in');
+                            io.unobserve(entry.target);
+                        }
+                    });
+                }, { threshold: 0.08 });
+                sections.forEach((s) => io.observe(s));
+            } else {
+                sections.forEach((s) => s.classList.add('in'));
+            }
+
+            /* ---------- Nav bar: small title + hairline after scrolling ---------- */
+            const navbar = document.getElementById('navbar');
+            const onScroll = () => navbar.classList.toggle('scrolled', window.scrollY > 50);
+            window.addEventListener('scroll', onScroll, { passive: true });
+            onScroll();
+        });
+    </script>
 </body>
 </html>
