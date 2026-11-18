@@ -3,38 +3,102 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <meta name="theme-color" content="#f2f2f7" media="(prefers-color-scheme: light)">
-    <meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)">
+    <meta name="color-scheme" content="light dark">
+    <meta name="theme-color" id="theme-color" content="#f2f2f7">
+    <meta name="description" content="Curated C++ and DSA in C++ learning resources: playlists, one-shot videos, notes, theory and books.">
     <title>C++ Programming</title>
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23007aff'/%3E%3Ctext x='32' y='42' font-family='Arial,sans-serif' font-size='26' font-weight='700' text-anchor='middle' fill='white'%3EC%2B%2B%3C/text%3E%3C/svg%3E">
+
+    <!-- Apply the saved / system theme before first paint so there is no light-to-dark flash. -->
+    <script>
+        (function () {
+            var t = null;
+            try { t = localStorage.getItem('theme'); } catch (e) {}
+            if (t !== 'light' && t !== 'dark') {
+                t = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+            }
+            document.documentElement.setAttribute('data-theme', t);
+            var m = document.getElementById('theme-color');
+            if (m) m.setAttribute('content', t === 'dark' ? '#000000' : '#f2f2f7');
+        })();
+    </script>
+
     <style>
+        /* =====================================================
+           Design tokens: Day (light) and Night (dark)
+           ===================================================== */
         :root {
-            --bg: #f2f2f7;
-            --card: #ffffff;
-            --label: #000000;
-            --secondary: #8a8a8e;
-            --separator: rgba(60, 60, 67, 0.18);
-            --highlight: rgba(60, 60, 67, 0.08);
-            --blue: #007aff;
-            --bar: rgba(242, 242, 247, 0.78);
             --spring: cubic-bezier(0.32, 0.72, 0, 1);
+            --nav-h: 52px;
+
+            color-scheme: light;
+            --bg: #f2f2f7;
+            --label: #000000;
+            --secondary: #6c6c70;
+            --link: #0066cc;
+            --blue: #007aff;
+
+            --glass: rgba(255, 255, 255, 0.62);
+            --glass-strong: rgba(255, 255, 255, 0.74);
+            --glass-border: rgba(255, 255, 255, 0.75);
+            --glass-hi: rgba(255, 255, 255, 0.9);
+            --glass-lo: rgba(0, 0, 0, 0.04);
+            --sep: rgba(60, 60, 67, 0.16);
+            --hl: rgba(60, 60, 67, 0.08);
+            --shadow: 0 8px 28px rgba(40, 60, 120, 0.12), 0 1px 3px rgba(0, 0, 0, 0.05);
+            --shadow-lg: 0 18px 50px rgba(30, 50, 110, 0.22), 0 2px 6px rgba(0, 0, 0, 0.06);
+            --seg-thumb: #ffffff;
+            --seg-thumb-shadow: 0 2px 8px rgba(0, 0, 0, 0.14);
+            --solid: #ffffff;
+            --menu-bg: rgba(255, 255, 255, 0.88);
+            --scrim: rgba(0, 0, 0, 0.22);
         }
 
-        @media (prefers-color-scheme: dark) {
-            :root {
-                --bg: #000000;
-                --card: #1c1c1e;
-                --label: #ffffff;
-                --secondary: #98989f;
-                --separator: rgba(84, 84, 88, 0.55);
-                --highlight: rgba(235, 235, 245, 0.1);
-                --blue: #0a84ff;
-                --bar: rgba(0, 0, 0, 0.72);
+        :root[data-theme="dark"] {
+            color-scheme: dark;
+            --bg: #000000;
+            --label: #ffffff;
+            --secondary: #a1a1a8;
+            --link: #4da3ff;
+            --blue: #0a84ff;
+
+            --glass: rgba(44, 44, 48, 0.55);
+            --glass-strong: rgba(30, 30, 34, 0.7);
+            --glass-border: rgba(255, 255, 255, 0.13);
+            --glass-hi: rgba(255, 255, 255, 0.2);
+            --glass-lo: rgba(0, 0, 0, 0.35);
+            --sep: rgba(255, 255, 255, 0.11);
+            --hl: rgba(255, 255, 255, 0.09);
+            --shadow: 0 10px 32px rgba(0, 0, 0, 0.55);
+            --shadow-lg: 0 20px 56px rgba(0, 0, 0, 0.7);
+            --seg-thumb: rgba(255, 255, 255, 0.2);
+            --seg-thumb-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+            --solid: #1c1c1e;
+            --menu-bg: rgba(30, 30, 34, 0.9);
+            --scrim: rgba(0, 0, 0, 0.5);
+        }
+
+        /* Browsers without backdrop-filter get solid surfaces instead of unreadable see-through ones. */
+        @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+            :root[data-theme] {
+                --glass: var(--solid);
+                --glass-strong: var(--solid);
+                --menu-bg: var(--solid);
             }
         }
 
-        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        /* =====================================================
+           Base
+           ===================================================== */
+        *, *::before, *::after { box-sizing: border-box; }
+        * { -webkit-tap-highlight-color: transparent; }
+        a, button { touch-action: manipulation; }
 
-        html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
+        html {
+            -webkit-text-size-adjust: 100%;
+            background: var(--bg);
+            transition: background-color 0.45s ease;
+        }
 
         body {
             margin: 0;
@@ -42,34 +106,79 @@
             font-size: 17px;
             line-height: 1.3;
             letter-spacing: -0.022em;
-            background: var(--bg);
             color: var(--label);
             -webkit-font-smoothing: antialiased;
             min-height: 100vh;
+            min-height: 100dvh;
             display: flex;
             flex-direction: column;
+            transition: color 0.45s ease;
         }
 
-        /* ---------- Sticky translucent nav bar ---------- */
+        body.menu-open { overflow: hidden; }
+
+        .sr-only {
+            position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0;
+            overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0;
+        }
+
+        /* =====================================================
+           Animated sky behind the glass (day and night layers cross-fade)
+           ===================================================== */
+        .sky { position: fixed; inset: 0; z-index: -1; overflow: hidden; pointer-events: none; }
+
+        .sky-layer { position: absolute; inset: 0; transition: opacity 0.9s ease; }
+
+        .sky-day   { --c1: 10, 132, 255;  --c2: 175, 82, 222;  --c3: 255, 149, 0;   opacity: 1; }
+        .sky-night { --c1: 10, 132, 255;  --c2: 94, 92, 230;   --c3: 48, 176, 199;  opacity: 0; }
+
+        :root[data-theme="dark"] .sky-day   { opacity: 0; }
+        :root[data-theme="dark"] .sky-night { opacity: 1; }
+
+        .blob { position: absolute; width: 62vmax; height: 62vmax; border-radius: 50%; will-change: transform; }
+
+        .sky-day .blob  { opacity: 0.55; }
+        .sky-night .blob { opacity: 0.8; }
+
+        .b1 { top: -22vmax; left: -18vmax;  background: radial-gradient(circle, rgba(var(--c1), 0.34) 0%, rgba(var(--c1), 0) 66%); animation: drift1 28s ease-in-out infinite alternate; }
+        .b2 { top: 18vmax;  right: -26vmax; background: radial-gradient(circle, rgba(var(--c2), 0.26) 0%, rgba(var(--c2), 0) 66%); animation: drift2 34s ease-in-out infinite alternate; }
+        .b3 { bottom: -28vmax; left: 4vmax; background: radial-gradient(circle, rgba(var(--c3), 0.22) 0%, rgba(var(--c3), 0) 66%); animation: drift3 31s ease-in-out infinite alternate; }
+
+        @keyframes drift1 { to { transform: translate3d(9vmax, 7vmax, 0) scale(1.08); } }
+        @keyframes drift2 { to { transform: translate3d(-8vmax, 9vmax, 0) scale(0.94); } }
+        @keyframes drift3 { to { transform: translate3d(7vmax, -8vmax, 0) scale(1.1); } }
+
+        /* =====================================================
+           Glass navigation bar
+           ===================================================== */
         .navbar {
             position: sticky;
             top: 0;
-            z-index: 10;
-            height: calc(44px + env(safe-area-inset-top));
-            padding-top: env(safe-area-inset-top);
-            display: flex;
+            z-index: 30;
+            height: calc(var(--nav-h) + env(safe-area-inset-top));
+            padding: env(safe-area-inset-top) max(10px, env(safe-area-inset-right)) 0 max(10px, env(safe-area-inset-left));
+            display: grid;
+            grid-template-columns: 1fr auto 1fr;
             align-items: center;
-            justify-content: center;
-            background: var(--bar);
-            -webkit-backdrop-filter: saturate(180%) blur(22px);
-            backdrop-filter: saturate(180%) blur(22px);
+            gap: 8px;
+            background: var(--glass-strong);
+            -webkit-backdrop-filter: saturate(180%) blur(24px);
+            backdrop-filter: saturate(180%) blur(24px);
             border-bottom: 0.5px solid transparent;
-            transition: border-color 0.25s ease;
+            transition: border-color 0.25s ease, background-color 0.45s ease;
         }
 
-        .navbar.scrolled { border-bottom-color: var(--separator); }
+        .navbar.scrolled { border-bottom-color: var(--sep); }
 
-        .navbar .nav-title {
+        .nav-left  { justify-self: start; }
+        .nav-right { justify-self: end; }
+        .nav-center { display: flex; justify-content: center; min-width: 0; }
+
+        .nav-title {
+            max-width: 52vw;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
             font-size: 17px;
             font-weight: 600;
             opacity: 0;
@@ -77,31 +186,236 @@
             transition: opacity 0.25s ease, transform 0.35s var(--spring);
         }
 
-        .navbar.scrolled .nav-title { opacity: 1; transform: translateY(0); }
+        .navbar.scrolled .nav-title { opacity: 1; transform: none; }
 
-        /* ---------- Large title ---------- */
-        .wrap {
-            width: 100%;
-            max-width: 700px;
-            margin: 0 auto;
-            padding: 0 max(16px, env(safe-area-inset-left)) 0 max(16px, env(safe-area-inset-right));
+        /* Round glass buttons (menu + theme) */
+        .icon-btn {
+            position: relative;
+            display: grid;
+            place-items: center;
+            width: 44px;
+            height: 44px;
+            padding: 0;
+            border-radius: 50%;
+            border: 0.5px solid var(--glass-border);
+            background: var(--glass);
+            color: var(--label);
+            -webkit-backdrop-filter: blur(18px) saturate(180%);
+            backdrop-filter: blur(18px) saturate(180%);
+            box-shadow: var(--shadow), inset 0 1px 0 var(--glass-hi);
+            cursor: pointer;
+            transition: transform 0.35s var(--spring), background-color 0.45s ease, border-color 0.45s ease, color 0.45s ease;
         }
 
-        .large-title { padding: 4px 4px 14px; animation: titleIn 0.7s var(--spring) both; }
+        .icon-btn:active { transform: scale(0.9); transition-duration: 0.1s; }
+        .icon-btn:focus-visible { outline: 2px solid var(--blue); outline-offset: 2px; }
+
+        /* Hamburger that morphs into an X */
+        .burger span {
+            position: absolute;
+            inset: 0;
+            margin: auto;
+            width: 18px;
+            height: 2px;
+            border-radius: 2px;
+            background: currentColor;
+            transition: transform 0.45s var(--spring), opacity 0.25s ease;
+        }
+
+        .burger span:nth-child(1) { transform: translateY(-5.5px); }
+        .burger span:nth-child(3) { transform: translateY(5.5px); }
+
+        body.menu-open .burger span:nth-child(1) { transform: rotate(45deg); }
+        body.menu-open .burger span:nth-child(2) { opacity: 0; transform: scaleX(0.2); }
+        body.menu-open .burger span:nth-child(3) { transform: rotate(-45deg); }
+
+        /* Sun / moon toggle */
+        .theme-btn svg {
+            position: absolute;
+            inset: 0;
+            margin: auto;
+            width: 22px;
+            height: 22px;
+            transition: transform 0.6s var(--spring), opacity 0.35s ease;
+        }
+
+        .theme-btn .sun  { color: #ff9f0a; opacity: 1; transform: rotate(0) scale(1); }
+        .theme-btn .moon { opacity: 0; transform: rotate(-80deg) scale(0.4); }
+
+        :root[data-theme="dark"] .theme-btn .sun  { opacity: 0; transform: rotate(80deg) scale(0.4); }
+        :root[data-theme="dark"] .theme-btn .moon { opacity: 1; transform: rotate(0) scale(1); }
+
+        /* Segmented subject switcher (tablet and desktop) */
+        .seg {
+            display: none;
+            position: relative;
+            padding: 3px;
+            border-radius: 999px;
+            border: 0.5px solid var(--glass-border);
+            background: var(--glass);
+            -webkit-backdrop-filter: blur(18px) saturate(180%);
+            backdrop-filter: blur(18px) saturate(180%);
+            box-shadow: var(--shadow), inset 0 1px 0 var(--glass-hi);
+            max-width: 100%;
+            overflow-x: auto;
+            scrollbar-width: none;
+            transition: background-color 0.45s ease, border-color 0.45s ease;
+        }
+
+        .seg::-webkit-scrollbar { display: none; }
+
+        .seg-thumb {
+            position: absolute;
+            top: 3px;
+            bottom: 3px;
+            left: 0;
+            width: var(--w, 0px);
+            transform: translateX(var(--x, 0px));
+            border-radius: 999px;
+            background: var(--seg-thumb);
+            box-shadow: var(--seg-thumb-shadow);
+            opacity: 0;
+            transition: background-color 0.45s ease;
+        }
+
+        .seg.ready .seg-thumb {
+            opacity: 1;
+            transition: transform 0.55s var(--spring), width 0.55s var(--spring), background-color 0.45s ease;
+        }
+
+        .seg-item {
+            position: relative;
+            display: inline-block;
+            padding: 7px 18px;
+            border-radius: 999px;
+            color: var(--secondary);
+            font-size: 14px;
+            font-weight: 600;
+            text-decoration: none;
+            white-space: nowrap;
+            transition: color 0.3s ease;
+        }
+
+        .seg-item[aria-current="page"] { color: var(--label); }
+        .seg-item:focus-visible { outline: 2px solid var(--blue); outline-offset: -2px; }
+
+        /* =====================================================
+           Mobile subject menu (opened by the hamburger)
+           ===================================================== */
+        .scrim {
+            position: fixed;
+            inset: 0;
+            z-index: 20;
+            background: var(--scrim);
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.35s ease, visibility 0s linear 0.35s;
+        }
+
+        body.menu-open .scrim { opacity: 1; visibility: visible; transition-delay: 0s; }
+
+        .menu {
+            position: fixed;
+            z-index: 45;
+            top: calc(var(--nav-h) + env(safe-area-inset-top) + 6px);
+            left: max(10px, env(safe-area-inset-left));
+            right: max(10px, env(safe-area-inset-right));
+            max-height: calc(100vh - var(--nav-h) - env(safe-area-inset-top) - env(safe-area-inset-bottom) - 24px);
+            max-height: calc(100dvh - var(--nav-h) - env(safe-area-inset-top) - env(safe-area-inset-bottom) - 24px);
+            overflow-y: auto;
+            overscroll-behavior: contain;
+            padding: 8px;
+            border-radius: 24px;
+            border: 0.5px solid var(--glass-border);
+            background: var(--menu-bg);
+            -webkit-backdrop-filter: blur(32px) saturate(190%);
+            backdrop-filter: blur(32px) saturate(190%);
+            box-shadow: var(--shadow-lg), inset 0 1px 0 var(--glass-hi);
+            transform-origin: top left;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px) scale(0.96);
+            transition: opacity 0.3s ease, transform 0.5s var(--spring), visibility 0s linear 0.5s, background-color 0.45s ease;
+        }
+
+        body.menu-open .menu {
+            opacity: 1;
+            visibility: visible;
+            transform: none;
+            transition-delay: 0s;
+        }
+
+        .menu-label {
+            margin: 6px 10px 6px;
+            font-size: 13px;
+            letter-spacing: -0.01em;
+            text-transform: uppercase;
+            color: var(--secondary);
+        }
+
+        .menu-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            min-height: 58px;
+            padding: 10px;
+            border-radius: 16px;
+            color: var(--label);
+            text-decoration: none;
+            transition: background-color 0.25s ease, transform 0.35s var(--spring), color 0.45s ease;
+        }
+
+        .menu-item[aria-current="page"] { background: var(--hl); }
+        .menu-item:active { transform: scale(0.98); transition-duration: 0.08s; }
+        .menu-item:focus-visible { outline: 2px solid var(--blue); outline-offset: -2px; }
+
+        .menu-item .meta { flex: 1; min-width: 0; }
+        .menu-item .t { display: block; font-weight: 600; }
+        .menu-item .s { display: block; margin-top: 1px; font-size: 13px; color: var(--secondary); }
+        .menu-item .tick { flex: none; width: 18px; height: 18px; color: var(--blue); opacity: 0; transform: scale(0.5); transition: opacity 0.3s ease, transform 0.45s var(--spring); }
+        .menu-item[aria-current="page"] .tick { opacity: 1; transform: none; }
+
+        body.menu-open .menu-item {
+            animation: menuItem 0.5s var(--spring) backwards;
+            animation-delay: calc(var(--i) * 50ms + 70ms);
+        }
+
+        @keyframes menuItem {
+            from { opacity: 0; transform: translateY(-8px); }
+            to   { opacity: 1; transform: none; }
+        }
+
+        /* =====================================================
+           Page layout
+           ===================================================== */
+        .wrap {
+            width: 100%;
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 0 max(16px, env(safe-area-inset-right)) 0 max(16px, env(safe-area-inset-left));
+        }
+
+        .large-title { padding: 10px 4px 16px; }
+        .large-title.animate { animation: titleIn 0.7s var(--spring) both; }
 
         .large-title h1 {
             margin: 0;
-            font-size: clamp(32px, 8vw, 40px);
+            font-size: clamp(30px, 8vw, 40px);
             font-weight: 700;
             letter-spacing: -0.03em;
             line-height: 1.1;
+            overflow-wrap: anywhere;
         }
 
-        .large-title p { margin: 6px 0 0; color: var(--secondary); font-size: 15px; }
+        .large-title p {
+            margin: 6px 0 0;
+            color: var(--secondary);
+            font-size: 15px;
+            transition: color 0.45s ease;
+        }
 
         main { flex: 1; padding-bottom: 12px; }
 
-        /* ---------- Grouped sections ---------- */
         section { margin-bottom: 28px; }
 
         .reveal {
@@ -113,18 +427,27 @@
         .reveal.in { opacity: 1; transform: none; }
 
         h2 {
-            margin: 0 0 7px 16px;
+            margin: 0 0 8px 16px;
             font-size: 13px;
             font-weight: 400;
             letter-spacing: -0.01em;
             text-transform: uppercase;
             color: var(--secondary);
+            transition: color 0.45s ease;
         }
 
+        /* =====================================================
+           Glass lists and rows
+           ===================================================== */
         .list {
-            background: var(--card);
-            border-radius: 12px;
+            background: var(--glass);
+            border-radius: 20px;
+            border: 0.5px solid var(--glass-border);
             overflow: hidden;
+            -webkit-backdrop-filter: blur(22px) saturate(170%);
+            backdrop-filter: blur(22px) saturate(170%);
+            box-shadow: var(--shadow), inset 0 1px 0 var(--glass-hi), inset 0 -1px 0 var(--glass-lo);
+            transition: background-color 0.45s ease, border-color 0.45s ease, box-shadow 0.45s ease;
         }
 
         .row {
@@ -133,7 +456,7 @@
             align-items: center;
             gap: 12px;
             width: 100%;
-            min-height: 48px;
+            min-height: 50px;
             padding: 9px 12px 9px 16px;
             color: var(--label);
             text-decoration: none;
@@ -143,10 +466,12 @@
             border: 0;
             background: transparent;
             cursor: pointer;
-            transition: background-color 0.25s ease, transform 0.35s var(--spring);
+            transition: background-color 0.25s ease, color 0.45s ease, transform 0.35s var(--spring);
+            /* "backwards" (not "both") so the press-scale below isn't overridden after the entrance finishes */
+            animation: rowIn 0.5s var(--spring) backwards;
+            animation-delay: calc(var(--i) * 45ms);
         }
 
-        /* separator lines: between direct rows and between media items */
         .row + .row::before,
         .item + .item > .row::before {
             content: '';
@@ -155,18 +480,22 @@
             left: 60px;
             right: 0;
             height: 0.5px;
-            background: var(--separator);
+            background: var(--sep);
         }
 
-        .row:hover { background: var(--highlight); }
-
-        .row:active {
-            background: var(--highlight);
-            transform: scale(0.98);
-            transition-duration: 0.08s;
-        }
-
+        .row:active { background: var(--hl); transform: scale(0.985); transition-duration: 0.08s; }
         .row:focus-visible { outline: 2px solid var(--blue); outline-offset: -2px; }
+
+        /* Hover effects only on devices that really hover, so touch screens never get "stuck" highlights */
+        @media (hover: hover) {
+            .row:hover { background: var(--hl); }
+            .row:hover .icon { transform: scale(1.08) rotate(-3deg); }
+            .row:hover .chev { transform: translateX(3px); opacity: 1; }
+            .item.open > .row:hover .chev { transform: rotate(90deg); }
+            .menu-item:hover { background: var(--hl); }
+            .seg-item:hover { color: var(--label); }
+            .yt-link:hover { text-decoration: underline; }
+        }
 
         .icon {
             flex: none;
@@ -175,12 +504,14 @@
             border-radius: 7px;
             display: grid;
             place-items: center;
-            font-size: 16px;
             color: #fff;
+            box-shadow: inset 0 0.5px 0 rgba(255, 255, 255, 0.4);
             transition: transform 0.4s var(--spring);
         }
 
-        .row:hover .icon { transform: scale(1.08) rotate(-3deg); }
+        .icon svg { width: 18px; height: 18px; }
+
+        .icon.lg { width: 38px; height: 38px; border-radius: 9px; font-size: 12px; font-weight: 700; letter-spacing: -0.02em; }
 
         .name { flex: 1; min-width: 0; overflow-wrap: anywhere; }
 
@@ -193,14 +524,20 @@
             transition: transform 0.35s var(--spring), opacity 0.25s ease;
         }
 
-        .row:hover .chev { transform: translateX(3px); opacity: 1; }
+        @keyframes rowIn {
+            from { opacity: 0; transform: translateX(-10px); }
+            to   { opacity: 1; transform: none; }
+        }
 
-        /* row entrance stagger */
-        .row { animation: rowIn 0.5s var(--spring) both; animation-delay: calc(var(--i) * 45ms); }
+        @keyframes titleIn {
+            from { opacity: 0; transform: translateY(14px); }
+            to   { opacity: 1; transform: none; }
+        }
 
-        /* ---------- Expandable media items (playlists & one-shot videos) ---------- */
+        /* =====================================================
+           Expandable media (playlists and one-shot videos)
+           ===================================================== */
         .item.open > .row .chev { transform: rotate(90deg); opacity: 1; }
-        .item.open > .row:hover .chev { transform: rotate(90deg); }
 
         .panel {
             display: grid;
@@ -217,17 +554,14 @@
             transition: visibility 0s linear 0.45s;
         }
 
-        .item.open > .panel > .panel-inner {
-            visibility: visible;
-            transition-delay: 0s;
-        }
+        .item.open > .panel > .panel-inner { visibility: visible; transition-delay: 0s; }
 
         .panel-body { padding: 4px 16px 16px; }
 
         .thumb {
             position: relative;
             aspect-ratio: 16 / 9;
-            border-radius: 12px;
+            border-radius: 14px;
             overflow: hidden;
             background: linear-gradient(135deg, #2c2c2e, #111);
             box-shadow: 0 6px 20px rgba(0, 0, 0, 0.18);
@@ -250,15 +584,8 @@
 
         .thumb img.loaded { opacity: 1; }
 
-        .thumb iframe {
-            position: absolute;
-            inset: 0;
-            width: 100%;
-            height: 100%;
-            border: 0;
-        }
+        .thumb iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
 
-        /* Play button: appears after the thumbnail */
         .play {
             position: absolute;
             top: 50%;
@@ -287,11 +614,13 @@
             transition-delay: 0.35s, 0.35s, 0s;
         }
 
-        .item.open .play:hover { background: rgba(255, 59, 48, 0.9); transform: translate(-50%, -50%) scale(1.08); transition-delay: 0s; }
         .item.open .play:active { transform: translate(-50%, -50%) scale(0.94); transition-duration: 0.1s; transition-delay: 0s; }
         .play:focus-visible { outline: 3px solid var(--blue); outline-offset: 3px; }
-
         .play svg { width: 28px; height: 28px; margin-left: 4px; }
+
+        @media (hover: hover) {
+            .item.open .play:hover { background: rgba(255, 59, 48, 0.9); transform: translate(-50%, -50%) scale(1.08); transition-delay: 0s; }
+        }
 
         .thumb.playing .play,
         .thumb.playing img { display: none; }
@@ -299,93 +628,106 @@
         .yt-link {
             display: inline-flex;
             align-items: center;
-            gap: 4px;
-            margin-top: 12px;
-            color: var(--blue);
+            min-height: 32px;
+            margin-top: 8px;
+            color: var(--link);
             font-size: 15px;
             text-decoration: none;
         }
 
-        .yt-link:hover { text-decoration: underline; }
+        .yt-link:focus-visible { outline: 2px solid var(--blue); outline-offset: 2px; border-radius: 4px; }
 
-        /* icon colours (iOS system palette) */
-        .c-red    { background: #ff3b30; }
-        .c-orange { background: #ff9500; }
-        .c-green  { background: #34c759; }
-        .c-blue   { background: #007aff; }
-        .c-purple { background: #af52de; }
+        /* iOS system icon colours */
+        .c-red    { background: linear-gradient(180deg, #ff5f55, #ff3b30); }
+        .c-orange { background: linear-gradient(180deg, #ffab33, #ff9500); }
+        .c-green  { background: linear-gradient(180deg, #4bd86f, #34c759); }
+        .c-blue   { background: linear-gradient(180deg, #339dff, #007aff); }
+        .c-purple { background: linear-gradient(180deg, #bf6fe8, #af52de); }
+        .c-indigo { background: linear-gradient(180deg, #7573e6, #5856d6); }
 
         footer {
             text-align: center;
-            padding: 8px 16px calc(24px + env(safe-area-inset-bottom));
+            padding: 8px 16px calc(28px + env(safe-area-inset-bottom));
             color: var(--secondary);
             font-size: 13px;
+            transition: color 0.45s ease;
         }
 
         footer p { margin: 0; }
 
-        @keyframes titleIn {
-            from { opacity: 0; transform: translateY(14px); }
-            to   { opacity: 1; transform: none; }
-        }
+        .noscript { padding: 24px 16px; text-align: center; color: var(--secondary); }
 
-        @keyframes rowIn {
-            from { opacity: 0; transform: translateX(-10px); }
-            to   { opacity: 1; transform: none; }
-        }
-
-        @media (min-width: 700px) {
+        /* =====================================================
+           Responsive
+           ===================================================== */
+        @media (min-width: 720px) {
+            .burger, .menu, .scrim { display: none; }
+            .nav-title { display: none; }
+            .seg { display: inline-flex; }
             .wrap { padding-left: 24px; padding-right: 24px; }
+            .large-title { padding-top: 18px; }
+            .large-title p { font-size: 17px; }
         }
 
         @media (max-width: 380px) {
             .play { width: 56px; height: 56px; }
             .play svg { width: 24px; height: 24px; }
+            .panel-body { padding: 4px 12px 14px; }
         }
 
         @media (prefers-reduced-motion: reduce) {
-            *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+            *, *::before, *::after { animation: none !important; transition: none !important; }
             .reveal { opacity: 1; transform: none; }
+            .seg-thumb { opacity: 1; }
         }
     </style>
 </head>
 <body>
-    <nav class="navbar" id="navbar" aria-label="Page title">
-        <span class="nav-title">C++ Programming</span>
+    <div class="sky" aria-hidden="true">
+        <div class="sky-layer sky-day"><i class="blob b1"></i><i class="blob b2"></i><i class="blob b3"></i></div>
+        <div class="sky-layer sky-night"><i class="blob b1"></i><i class="blob b2"></i><i class="blob b3"></i></div>
+    </div>
+
+    <header class="navbar" id="navbar">
+        <div class="nav-left">
+            <button class="icon-btn burger" id="burger" type="button" aria-label="Open subject menu" aria-expanded="false" aria-controls="menu">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+
+        <div class="nav-center">
+            <span class="nav-title" id="nav-title" aria-hidden="true">C++ Programming</span>
+            <nav class="seg" id="seg" aria-label="Subjects"><span class="seg-thumb" aria-hidden="true"></span></nav>
+        </div>
+
+        <div class="nav-right">
+            <button class="icon-btn theme-btn" id="theme-btn" type="button" aria-label="Switch to dark mode">
+                <svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true">
+                    <circle cx="12" cy="12" r="4.2" fill="currentColor"/>
+                    <path d="M12 2.8v2.4M12 18.8v2.4M2.8 12h2.4M18.8 12h2.4M5.5 5.5l1.7 1.7M16.8 16.8l1.7 1.7M5.5 18.5l1.7-1.7M16.8 7.2l1.7-1.7"/>
+                </svg>
+                <svg class="moon" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9z"/>
+                </svg>
+            </button>
+        </div>
+    </header>
+
+    <div class="scrim" id="scrim"></div>
+    <nav class="menu" id="menu" aria-label="Subjects">
+        <p class="menu-label">Subjects</p>
+        <div id="menu-list"></div>
     </nav>
 
     <div class="wrap">
-        <header class="large-title">
-            <h1>C++ Programming</h1>
-            <p>Curated learning resources</p>
-        </header>
+        <div class="large-title animate" id="large-title">
+            <h1 id="page-title">C++ Programming</h1>
+            <p id="page-subtitle">Curated learning resources</p>
+        </div>
 
-        <main>
-            <section id="playlists-section" class="reveal">
-                <h2>Playlists</h2>
-                <div id="playlist-list" class="list"></div>
-            </section>
+        <main id="content"></main>
 
-            <section id="notes-section" class="reveal">
-                <h2>Notes, Cheatsheets, Projects</h2>
-                <div id="notes-list" class="list"></div>
-            </section>
-
-            <section id="videos-section" class="reveal">
-                <h2>One Shot Videos</h2>
-                <div id="video-list" class="list"></div>
-            </section>
-
-            <section id="related-info-section" class="reveal">
-                <h2>Theory Related Information</h2>
-                <div id="related-info-list" class="list"></div>
-            </section>
-
-            <section id="books-section" class="reveal">
-                <h2>Recommended Books</h2>
-                <div id="book-list" class="list"></div>
-            </section>
-        </main>
+        <noscript><p class="noscript">Please enable JavaScript to view the learning resources.</p></noscript>
 
         <footer>
             <p>Created by Khushpreet</p>
@@ -393,81 +735,164 @@
     </div>
 
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const playlists = [
-                { name: "C++ [Apna-college]", url: "https://youtube.com/playlist?list=PLfqMhTWNBTe0b2nM6JHVCnAkhQRGiZMSJ&si=g1ObTg1SL7QyNFFs" },
-                { name: "C++ [Code with harry]", url: "https://youtube.com/playlist?list=PLu0W_9lII9agpFUAlPFe_VNSlXW5uE0YL&si=yhu_ktYFAf5wYQTB" },
-                { name: "C++ [Learn Coding]", url: "https://youtube.com/playlist?list=PLqleLpAMfxGDq9Ehl8FUstcRrCRQPQO7n&si=RCS_mU1bi527YJ6i" },
-                { name: "C++ [Happy Coding With Prishu]", url: "https://youtube.com/playlist?list=PLG6NoBpoBh44rYAAOx2JM1NNDb2jde1OH&si=qCUjFSHMvoV42xgZ" }
+        (() => {
+            'use strict';
+
+            /* =====================================================
+               DATA
+               To add a subject, push a new object into SUBJECTS.
+               To add a resource, push { name, url } into a section.
+               Sections with no items are hidden automatically.
+               ===================================================== */
+            const SUBJECTS = [
+                {
+                    id: 'cpp',
+                    short: 'C++',
+                    badge: 'C++',
+                    color: 'c-blue',
+                    name: 'C++ Programming',
+                    subtitle: 'Curated learning resources',
+                    blurb: 'Playlists, notes, theory & books',
+                    sections: [
+                        {
+                            title: 'Playlists', kind: 'playlist', icon: 'playlist', color: 'c-red',
+                            items: [
+                                { name: 'C++ [Apna-college]', url: 'https://youtube.com/playlist?list=PLfqMhTWNBTe0b2nM6JHVCnAkhQRGiZMSJ&si=g1ObTg1SL7QyNFFs' },
+                                { name: 'C++ [Code with harry]', url: 'https://youtube.com/playlist?list=PLu0W_9lII9agpFUAlPFe_VNSlXW5uE0YL&si=yhu_ktYFAf5wYQTB' },
+                                { name: 'C++ [Learn Coding]', url: 'https://youtube.com/playlist?list=PLqleLpAMfxGDq9Ehl8FUstcRrCRQPQO7n&si=RCS_mU1bi527YJ6i' },
+                                { name: 'C++ [Happy Coding With Prishu]', url: 'https://youtube.com/playlist?list=PLG6NoBpoBh44rYAAOx2JM1NNDb2jde1OH&si=qCUjFSHMvoV42xgZ' }
+                            ]
+                        },
+                        {
+                            title: 'Notes, Cheatsheets, Projects', kind: 'link', icon: 'note', color: 'c-orange',
+                            items: [
+                                { name: 'C++ Cheatsheet', url: 'https://www.codewithharry.com/blogpost/cpp-cheatsheet/' },
+                                { name: 'C++ Cheatsheet [GitHub]', url: 'https://github.com/EbookFoundation/free-programming-books/blob/main/more/free-programming-cheatsheets.md' },
+                                { name: 'C++ Projects', url: 'https://www.interviewbit.com/blog/cpp-projects/' },
+                                { name: 'C++ Programs', url: 'https://www.sanfoundry.com/cpp-programs/' },
+                                { name: 'C++ Notes', url: 'https://drive.google.com/file/d/1uucE6DVdhbbUSoNUb4-ul32cCpD4ezlN/view' }
+                            ]
+                        },
+                        {
+                            title: 'One Shot Videos', kind: 'video', icon: 'video', color: 'c-purple',
+                            items: [
+                                { name: 'C++ [Coding seekho]', url: 'https://youtu.be/ZzRT6pyROz4?si=Fq7SQD7cGbZqHCF4' },
+                                { name: 'C++ [Learn coding]', url: 'https://youtu.be/HME2SrWWSYk?si=76opJ3Z9ptIGsofS' },
+                                { name: 'C++ [Apna-college]', url: 'https://youtu.be/mlIUKyZIUUU?si=FdAWt1pVkOIEs-uE' },
+                                { name: 'C++ [Code with harry]', url: 'https://youtu.be/yGB9jhsEsr8?si=RjAtWz63DmCIJgs4' },
+                                { name: 'C++ [College wallah]', url: 'https://youtu.be/e7sAf4SbS_g?si=mjAhnI9fPnnMHJPJ' },
+                                { name: 'C++ [5 min Engineering]', url: 'https://www.youtube.com/watch?v=eWHzz-WHQh4' },
+                                { name: 'C++ [Not your college]', url: 'https://youtu.be/LAK-VFr9rFc?si=PlUGOQ4Ahu87Sf5s' },
+                                { name: 'C++ [Bro Code]', url: 'https://youtu.be/-TkoO8Z07hI?si=zDSmLgHhQu6yZWpI' }
+                            ]
+                        },
+                        {
+                            title: 'Theory Related Information', kind: 'link', icon: 'info', color: 'c-blue',
+                            items: [
+                                { name: 'C++ [W3 schools]', url: 'https://www.w3schools.com/cpp/cpp_intro.asp' },
+                                { name: 'C++ [Geeks for Geeks]', url: 'https://www.geeksforgeeks.org/c-plus-plus/' },
+                                { name: 'C++ [Javatpoint]', url: 'https://www.javatpoint.com/cpp-tutorial' },
+                                { name: 'C++ [Code with harry]', url: 'https://www.codewithharry.com/tutorial/cplusplus/' },
+                                { name: 'C++', url: 'https://cplusplus.com/doc/tutorial/' }
+                            ]
+                        },
+                        {
+                            title: 'Recommended Books', kind: 'link', icon: 'book', color: 'c-green',
+                            items: [
+                                { name: 'C++ Book [Richard l Halterman]', url: 'https://web.archive.org/web/20191005170118/https://python.cs.southern.edu/cppbook/progcpp.pdf' },
+                                { name: 'C++ Book [Tutorialspoint]', url: 'https://www.tutorialspoint.com/cplusplus/cpp_tutorial.pdf' },
+                                { name: 'C++ Book [Stack Overflow]', url: 'https://riptutorial.com/Download/cplusplus.pdf' }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    id: 'dsa-cpp',
+                    short: 'DSA in C++',
+                    badge: 'DSA',
+                    color: 'c-indigo',
+                    name: 'DSA in C++',
+                    subtitle: 'Data Structures & Algorithms with C++',
+                    blurb: 'Playlists, one-shots & theory',
+                    sections: [
+                        {
+                            title: 'Playlists', kind: 'playlist', icon: 'playlist', color: 'c-red',
+                            items: [
+                                { name: 'DSA in C++ [Apna-college]', url: 'https://youtube.com/playlist?list=PLfqMhTWNBTe137I_EPQd34TsgV6IO55pt&si=nHkCTpPAsTxBMyDF' },
+                                { name: 'DSA in C++ [College wallah]', url: 'https://youtube.com/playlist?list=PLxgZQoSe9cg0df_GxVjz3DD_Gck5tMXAd&si=6oLsM9cnRMOjmZwq' },
+                                { name: 'DSA in C++ [Coder Army]', url: 'https://youtube.com/playlist?list=PLQEaRBV9gAFu4ovJ41PywklqI7IyXwr01&si=aBxn3ctA53gzYWrR' }
+                            ]
+                        },
+                        {
+                            title: 'One Shot Videos', kind: 'video', icon: 'video', color: 'c-purple',
+                            items: [
+                                { name: 'DSA in C++ [College wallah]', url: 'https://youtu.be/GRxzQXBwA-U?si=sy4xHepoG1CWbUXG' }
+                            ]
+                        },
+                        {
+                            title: 'Theory Related Information', kind: 'link', icon: 'info', color: 'c-blue',
+                            items: [
+                                { name: 'DSA in C++ [Geeks for Geeks]', url: 'https://www.geeksforgeeks.org/cpp/learn-dsa-in-cpp/' }
+                            ]
+                        }
+                    ]
+                }
             ];
 
-            const videos = [
-                { name: "C++ [Coding seekho]", url: "https://youtu.be/ZzRT6pyROz4?si=Fq7SQD7cGbZqHCF4" },
-                { name: "C++ [Learn coding]", url: "https://youtu.be/HME2SrWWSYk?si=76opJ3Z9ptIGsofS" },
-                { name: "C++ [Apna-college]", url: "https://youtu.be/mlIUKyZIUUU?si=FdAWt1pVkOIEs-uE" },
-                { name: "C++ [Code with harry]", url: "https://youtu.be/yGB9jhsEsr8?si=RjAtWz63DmCIJgs4" },
-                { name: "C++ [College wallah]", url: "https://youtu.be/e7sAf4SbS_g?si=mjAhnI9fPnnMHJPJ" },
-                { name: "C++ [5 min Engineering]", url: "https://www.youtube.com/watch?v=eWHzz-WHQh4" },
-                { name: "C++ [Not your college]", url: "https://youtu.be/LAK-VFr9rFc?si=PlUGOQ4Ahu87Sf5s" },
-                { name: "C++ [Bro Code]", url: "https://youtu.be/-TkoO8Z07hI?si=zDSmLgHhQu6yZWpI" }
-            ];
+            /* =====================================================
+               Small helpers and icons
+               ===================================================== */
+            const $ = (selector) => document.querySelector(selector);
 
-            const relatedInfo = [
-                { name: "C++ [W3 schools]", url: "https://www.w3schools.com/cpp/cpp_intro.asp" },
-                { name: "C++ [Geeks for Geeks]", url: "https://www.geeksforgeeks.org/c-plus-plus/" },
-                { name: "C++ [Javatpoint]", url: "https://www.javatpoint.com/cpp-tutorial" },
-                { name: "C++ [Code with harry]", url: "https://www.codewithharry.com/tutorial/cplusplus/" },
-                { name: "C++", url: "https://cplusplus.com/doc/tutorial/" }
-            ];
+            const h = (tag, className, props) => {
+                const node = document.createElement(tag);
+                if (className) node.className = className;
+                if (props) Object.assign(node, props);
+                return node;
+            };
 
-            const notes = [
-                { name: "C++ Cheatsheet", url: "https://www.codewithharry.com/blogpost/cpp-cheatsheet/" },
-                { name: "C++ CheetSheet[github]", url: "https://github.com/EbookFoundation/free-programming-books/blob/main/more/free-programming-cheatsheets.md" },
-                { name: "C++ Projects", url: "https://www.interviewbit.com/blog/cpp-projects/" },
-                { name: "C++ Programs", url: "https://www.sanfoundry.com/cpp-programs/" },
-                { name: "C++ Notes", url: "https://drive.google.com/file/d/1uucE6DVdhbbUSoNUb4-ul32cCpD4ezlN/view" }
-            ];
+            // Only ever used with the trusted constant strings below, never with user or URL data.
+            const fromHTML = (markup) => {
+                const tpl = document.createElement('template');
+                tpl.innerHTML = markup.trim();
+                return tpl.content.firstElementChild;
+            };
 
-            const books = [
-                { name: "C++ Book [Richard l Halterman]", url: "https://web.archive.org/web/20191005170118/https://python.cs.southern.edu/cppbook/progcpp.pdf" },
-                { name: "C++ Book [Tutorialspoint]", url: "https://www.tutorialspoint.com/cplusplus/cpp_tutorial.pdf" },
-                { name: "C++ Book [Stack Overflow]", url: "https://riptutorial.com/Download/cplusplus.pdf" }
-            ];
+            const stroke = (inner) =>
+                '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + inner + '</svg>';
 
-            const chevron = '<svg class="chev" viewBox="0 0 8 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M1 1l6 6-6 6"/></svg>';
-            const playIcon = '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 4.5v15a1 1 0 0 0 1.52.85l12-7.5a1 1 0 0 0 0-1.7l-12-7.5A1 1 0 0 0 7 4.5z"/></svg>';
+            const ICONS = {
+                playlist: stroke('<path d="M4 6h10M4 11h10M4 16h6"/><path d="M15.5 13v6l5-3z" fill="currentColor" stroke-width="1.2"/>'),
+                note:     stroke('<path d="M7 3h7l4 4v14H7z"/><path d="M14 3v4h4M10 12h5M10 16h5"/>'),
+                video:    stroke('<circle cx="12" cy="12" r="8.5"/><path d="M10.4 8.8v6.4l5.2-3.2z" fill="currentColor" stroke-width="1.2"/>'),
+                info:     stroke('<circle cx="12" cy="12" r="8.5"/><path d="M12 11v5.2"/><circle cx="12" cy="7.8" r=".6" fill="currentColor"/>'),
+                book:     stroke('<path d="M5 5a2 2 0 0 1 2-2h12v15H7a2 2 0 0 0-2 2z"/><path d="M5 20a2 2 0 0 0 2 2h12v-4"/>')
+            };
 
-            /* ---------- Plain link rows (notes, theory, books) ---------- */
-            function renderRows(list, elementId, rowClass, symbol, colour) {
-                const container = document.getElementById(elementId);
-                container.innerHTML = '';
-                list.forEach((item, i) => {
-                    const a = document.createElement('a');
-                    a.className = 'row ' + rowClass;
-                    a.href = item.url;
-                    a.target = '_blank';
-                    a.rel = 'noopener noreferrer';
-                    a.style.setProperty('--i', i);
-                    a.innerHTML =
-                        '<span class="icon ' + colour + '" aria-hidden="true">' + symbol + '</span>' +
-                        '<span class="name"></span>' + chevron;
-                    a.querySelector('.name').textContent = item.name;
-                    container.appendChild(a);
-                });
-            }
+            const CHEVRON = '<svg class="chev" viewBox="0 0 8 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M1 1l6 6-6 6"/></svg>';
+            const TICK = '<svg class="tick" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>';
+            const PLAY_ICON = '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 4.5v15a1 1 0 0 0 1.52.85l12-7.5a1 1 0 0 0 0-1.7l-12-7.5A1 1 0 0 0 7 4.5z"/></svg>';
 
-            /* ---------- Helpers for YouTube links ---------- */
-            function getVideoId(url) {
+            const onMedia = (query, handler) => {
+                if (query.addEventListener) query.addEventListener('change', handler);
+                else if (query.addListener) query.addListener(handler); // very old Safari
+            };
+
+            const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+            /* =====================================================
+               YouTube helpers
+               ===================================================== */
+            function parseYouTube(url, kind) {
                 try {
                     const u = new URL(url);
-                    if (u.hostname === 'youtu.be') return u.pathname.slice(1);
-                    return u.searchParams.get('v');
-                } catch (e) { return null; }
-            }
-
-            function getPlaylistId(url) {
-                try { return new URL(url).searchParams.get('list'); }
-                catch (e) { return null; }
+                    const id = kind === 'playlist'
+                        ? u.searchParams.get('list')
+                        : (u.hostname === 'youtu.be' ? u.pathname.slice(1) : u.searchParams.get('v'));
+                    return id && /^[\w-]+$/.test(id) ? id : null;
+                } catch (e) {
+                    return null;
+                }
             }
 
             function embedUrl(kind, id) {
@@ -478,145 +903,314 @@
                     : base + encodeURIComponent(id) + '?' + opts;
             }
 
-            function loadThumbnail(kind, id, url, img) {
-                const done = (src) => {
+            const thumbCache = new Map();
+
+            function loadThumbnail(kind, id, img) {
+                const show = (src) => {
                     img.onload = () => img.classList.add('loaded');
                     img.src = src;
                 };
+
                 if (kind === 'video') {
-                    done('https://i.ytimg.com/vi/' + id + '/hqdefault.jpg');
+                    show('https://i.ytimg.com/vi/' + id + '/hqdefault.jpg');
                     return;
                 }
-                // Playlists: ask YouTube's oEmbed endpoint for the cover thumbnail
+
+                if (thumbCache.has(id)) {
+                    show(thumbCache.get(id));
+                    return;
+                }
+
+                // Playlists: ask YouTube's oEmbed endpoint for the cover image.
                 const playlistUrl = 'https://www.youtube.com/playlist?list=' + id;
                 fetch('https://www.youtube.com/oembed?format=json&url=' + encodeURIComponent(playlistUrl))
-                    .then((r) => r.ok ? r.json() : Promise.reject())
-                    .then((data) => { if (data.thumbnail_url) done(data.thumbnail_url); })
-                    .catch(() => { /* keep dark placeholder; play button still works */ });
+                    .then((r) => (r.ok ? r.json() : Promise.reject(new Error('oembed'))))
+                    .then((data) => {
+                        if (data && data.thumbnail_url) {
+                            thumbCache.set(id, data.thumbnail_url);
+                            show(data.thumbnail_url);
+                        }
+                    })
+                    .catch(() => { /* keep the dark placeholder; the play button still works */ });
             }
 
-            /* ---------- Expandable media rows (playlists & one-shot videos) ---------- */
             function resetThumb(item) {
                 const thumb = item.querySelector('.thumb');
                 const frame = thumb.querySelector('iframe');
-                if (frame) frame.remove();
+                if (frame) frame.remove(); // removing the iframe also stops the video
                 thumb.classList.remove('playing');
             }
 
-            function renderMedia(list, elementId, kind, symbol, colour) {
-                const container = document.getElementById(elementId);
-                container.innerHTML = '';
+            /* =====================================================
+               Building rows and sections
+               ===================================================== */
+            let uid = 0;
 
-                list.forEach((data, i) => {
-                    const id = kind === 'playlist' ? getPlaylistId(data.url) : getVideoId(data.url);
-
-                    const item = document.createElement('div');
-                    item.className = 'item';
-
-                    const toggle = document.createElement('button');
-                    toggle.type = 'button';
-                    toggle.className = 'row ' + kind + '-button';
-                    toggle.style.setProperty('--i', i);
-                    toggle.setAttribute('aria-expanded', 'false');
-                    toggle.innerHTML =
-                        '<span class="icon ' + colour + '" aria-hidden="true">' + symbol + '</span>' +
-                        '<span class="name"></span>' + chevron;
-                    toggle.querySelector('.name').textContent = data.name;
-
-                    const panel = document.createElement('div');
-                    panel.className = 'panel';
-                    panel.innerHTML =
-                        '<div class="panel-inner"><div class="panel-body">' +
-                            '<div class="thumb">' +
-                                '<img alt="" loading="lazy" decoding="async">' +
-                                '<button type="button" class="play" aria-label="Play"></button>' +
-                            '</div>' +
-                            '<a class="yt-link" target="_blank" rel="noopener noreferrer">Open on YouTube ›</a>' +
-                        '</div></div>';
-
-                    const thumb = panel.querySelector('.thumb');
-                    const img = panel.querySelector('img');
-                    const playBtn = panel.querySelector('.play');
-                    const link = panel.querySelector('.yt-link');
-
-                    img.alt = data.name + ' thumbnail';
-                    playBtn.innerHTML = playIcon;
-                    playBtn.setAttribute('aria-label', 'Play ' + data.name);
-                    link.href = data.url;
-
-                    let thumbLoaded = false;
-
-                    toggle.addEventListener('click', () => {
-                        const opening = !item.classList.contains('open');
-
-                        // Close any other open item in this list
-                        container.querySelectorAll('.item.open').forEach((other) => {
-                            if (other !== item) {
-                                other.classList.remove('open');
-                                other.querySelector('.row').setAttribute('aria-expanded', 'false');
-                                resetThumb(other);
-                            }
-                        });
-
-                        item.classList.toggle('open', opening);
-                        toggle.setAttribute('aria-expanded', String(opening));
-
-                        if (opening) {
-                            if (!thumbLoaded && id) {
-                                thumbLoaded = true;
-                                loadThumbnail(kind, id, data.url, img);
-                            }
-                        } else {
-                            resetThumb(item);
-                        }
-                    });
-
-                    playBtn.addEventListener('click', () => {
-                        if (!id) { window.open(data.url, '_blank', 'noopener'); return; }
-                        const frame = document.createElement('iframe');
-                        frame.src = embedUrl(kind, id);
-                        frame.title = data.name;
-                        frame.allow = 'autoplay; encrypted-media; picture-in-picture; fullscreen';
-                        frame.allowFullscreen = true;
-                        frame.referrerPolicy = 'strict-origin-when-cross-origin';
-                        thumb.appendChild(frame);
-                        thumb.classList.add('playing');
-                    });
-
-                    item.appendChild(toggle);
-                    item.appendChild(panel);
-                    container.appendChild(item);
-                });
+            function iconBadge(section) {
+                const span = h('span', 'icon ' + section.color);
+                span.setAttribute('aria-hidden', 'true');
+                span.innerHTML = ICONS[section.icon];
+                return span;
             }
 
-            renderMedia(playlists, 'playlist-list', 'playlist', '▶', 'c-red');
-            renderRows(notes,       'notes-list',        'notes-button',        '✎', 'c-orange');
-            renderMedia(videos,    'video-list',    'video',    '●', 'c-purple');
-            renderRows(relatedInfo, 'related-info-list', 'related-info-button', 'i', 'c-blue');
-            renderRows(books,       'book-list',         'book-button',         '❒', 'c-green');
+            function linkRow(item, i, section) {
+                const a = h('a', 'row', { href: item.url, target: '_blank', rel: 'noopener noreferrer' });
+                a.style.setProperty('--i', i);
+                a.append(iconBadge(section), h('span', 'name', { textContent: item.name }), fromHTML(CHEVRON));
+                return a;
+            }
 
-            /* ---------- Scroll reveal for sections ---------- */
-            const sections = document.querySelectorAll('.reveal');
-            if ('IntersectionObserver' in window) {
-                const io = new IntersectionObserver((entries) => {
+            function mediaItem(item, i, section) {
+                const kind = section.kind; // 'playlist' | 'video'
+                const id = parseYouTube(item.url, kind);
+                const panelId = 'panel-' + (++uid);
+
+                const wrap = h('div', 'item');
+
+                const toggle = h('button', 'row', { type: 'button' });
+                toggle.style.setProperty('--i', i);
+                toggle.setAttribute('aria-expanded', 'false');
+                toggle.setAttribute('aria-controls', panelId);
+                toggle.append(iconBadge(section), h('span', 'name', { textContent: item.name }), fromHTML(CHEVRON));
+
+                const thumb = h('div', 'thumb');
+                const img = h('img', '', { alt: item.name + ' thumbnail', loading: 'lazy', decoding: 'async' });
+                const play = h('button', 'play', { type: 'button' });
+                play.setAttribute('aria-label', 'Play ' + item.name);
+                play.innerHTML = PLAY_ICON;
+                thumb.append(img, play);
+
+                const link = h('a', 'yt-link', { href: item.url, target: '_blank', rel: 'noopener noreferrer', textContent: 'Open on YouTube \u203A' });
+
+                const body = h('div', 'panel-body');
+                body.append(thumb, link);
+                const inner = h('div', 'panel-inner');
+                inner.append(body);
+                const panel = h('div', 'panel', { id: panelId });
+                panel.append(inner);
+
+                wrap.append(toggle, panel);
+
+                toggle.addEventListener('click', () => {
+                    const opening = !wrap.classList.contains('open');
+
+                    // Only one item open at a time within a list
+                    wrap.parentElement.querySelectorAll('.item.open').forEach((other) => {
+                        if (other === wrap) return;
+                        other.classList.remove('open');
+                        other.querySelector('.row').setAttribute('aria-expanded', 'false');
+                        resetThumb(other);
+                    });
+
+                    wrap.classList.toggle('open', opening);
+                    toggle.setAttribute('aria-expanded', String(opening));
+
+                    if (opening) {
+                        if (id && !img.getAttribute('src')) loadThumbnail(kind, id, img);
+                    } else {
+                        resetThumb(wrap);
+                    }
+                });
+
+                play.addEventListener('click', () => {
+                    if (!id) { window.open(item.url, '_blank', 'noopener'); return; }
+                    const frame = h('iframe');
+                    frame.src = embedUrl(kind, id);
+                    frame.title = item.name;
+                    frame.allow = 'autoplay; encrypted-media; picture-in-picture; fullscreen';
+                    frame.allowFullscreen = true;
+                    frame.referrerPolicy = 'strict-origin-when-cross-origin';
+                    thumb.append(frame);
+                    thumb.classList.add('playing');
+                });
+
+                return wrap;
+            }
+
+            function buildSection(section) {
+                const sec = h('section', 'reveal');
+                const list = h('div', 'list');
+                section.items.forEach((item, i) => {
+                    list.append(section.kind === 'link' ? linkRow(item, i, section) : mediaItem(item, i, section));
+                });
+                sec.append(h('h2', '', { textContent: section.title }), list);
+                return sec;
+            }
+
+            /* =====================================================
+               Scroll reveal
+               ===================================================== */
+            const io = 'IntersectionObserver' in window
+                ? new IntersectionObserver((entries) => {
                     entries.forEach((entry) => {
                         if (entry.isIntersecting) {
                             entry.target.classList.add('in');
                             io.unobserve(entry.target);
                         }
                     });
-                }, { threshold: 0.08 });
-                sections.forEach((s) => io.observe(s));
-            } else {
-                sections.forEach((s) => s.classList.add('in'));
+                }, { threshold: 0.08 })
+                : null;
+
+            /* =====================================================
+               Subject navigation (desktop segmented control + mobile hamburger menu)
+               ===================================================== */
+            const content = $('#content');
+            const seg = $('#seg');
+            const menuList = $('#menu-list');
+            const burger = $('#burger');
+            const menu = $('#menu');
+            const scrim = $('#scrim');
+            const largeTitle = $('#large-title');
+            const pageTitle = $('#page-title');
+            const pageSubtitle = $('#page-subtitle');
+            const navTitle = $('#nav-title');
+
+            SUBJECTS.forEach((subject, i) => {
+                const tab = h('a', 'seg-item', { href: '#' + subject.id, textContent: subject.short });
+                tab.dataset.subject = subject.id;
+                seg.append(tab);
+
+                const entry = h('a', 'menu-item', { href: '#' + subject.id });
+                entry.dataset.subject = subject.id;
+                entry.style.setProperty('--i', i);
+                const badge = h('span', 'icon lg ' + subject.color, { textContent: subject.badge });
+                badge.setAttribute('aria-hidden', 'true');
+                const meta = h('span', 'meta');
+                meta.append(h('span', 't', { textContent: subject.name }), h('span', 's', { textContent: subject.blurb }));
+                entry.append(badge, meta, fromHTML(TICK));
+                menuList.append(entry);
+            });
+
+            // Sliding "thumb" behind the active segment
+            function placeThumb() {
+                const active = seg.querySelector('[aria-current="page"]');
+                if (!active || !seg.offsetWidth) return;
+                seg.style.setProperty('--x', active.offsetLeft + 'px');
+                seg.style.setProperty('--w', active.offsetWidth + 'px');
+                if (!seg.classList.contains('ready')) {
+                    requestAnimationFrame(() => seg.classList.add('ready'));
+                }
             }
 
-            /* ---------- Nav bar: small title + hairline after scrolling ---------- */
-            const navbar = document.getElementById('navbar');
-            const onScroll = () => navbar.classList.toggle('scrolled', window.scrollY > 50);
+            if ('ResizeObserver' in window) new ResizeObserver(placeThumb).observe(seg);
+            window.addEventListener('resize', placeThumb);
+            if (document.fonts && document.fonts.ready) document.fonts.ready.then(placeThumb);
+
+            // Mobile menu
+            const isMenuOpen = () => document.body.classList.contains('menu-open');
+
+            function setMenu(open) {
+                if (open === isMenuOpen()) return;
+                document.body.classList.toggle('menu-open', open);
+                burger.setAttribute('aria-expanded', String(open));
+                burger.setAttribute('aria-label', open ? 'Close subject menu' : 'Open subject menu');
+                if (open) {
+                    const target = menu.querySelector('[aria-current="page"]') || menu.querySelector('a');
+                    if (target) target.focus({ preventScroll: true });
+                }
+            }
+
+            burger.addEventListener('click', () => setMenu(!isMenuOpen()));
+            scrim.addEventListener('click', () => setMenu(false));
+            menu.addEventListener('click', (e) => { if (e.target.closest('a')) setMenu(false); });
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape' && isMenuOpen()) { setMenu(false); burger.focus(); }
+            });
+            onMedia(window.matchMedia('(min-width: 720px)'), (e) => { if (e.matches) setMenu(false); });
+
+            // Show a subject
+            let currentId = null;
+
+            function showSubject(id) {
+                const subject = SUBJECTS.find((s) => s.id === id);
+                if (!subject || subject.id === currentId) return;
+                const isFirst = currentId === null;
+                currentId = subject.id;
+
+                document.title = subject.name;
+                pageTitle.textContent = subject.name;
+                pageSubtitle.textContent = subject.subtitle;
+                navTitle.textContent = subject.name;
+
+                document.querySelectorAll('[data-subject]').forEach((link) => {
+                    if (link.dataset.subject === subject.id) link.setAttribute('aria-current', 'page');
+                    else link.removeAttribute('aria-current');
+                });
+                placeThumb();
+
+                content.textContent = '';
+                subject.sections
+                    .filter((section) => section.items.length > 0)
+                    .forEach((section) => content.append(buildSection(section)));
+
+                content.querySelectorAll('.reveal').forEach((node) => {
+                    if (io) io.observe(node); else node.classList.add('in');
+                });
+
+                if (!isFirst) {
+                    setMenu(false);
+                    window.scrollTo(0, 0);
+                    largeTitle.classList.remove('animate');
+                    void largeTitle.offsetWidth; // restart the CSS animation
+                    largeTitle.classList.add('animate');
+                }
+            }
+
+            function subjectFromHash() {
+                let id = '';
+                try { id = decodeURIComponent(location.hash.slice(1)); } catch (e) { /* malformed hash */ }
+                return SUBJECTS.some((s) => s.id === id) ? id : SUBJECTS[0].id;
+            }
+
+            window.addEventListener('hashchange', () => showSubject(subjectFromHash()));
+
+            /* =====================================================
+               Day / Night theme
+               ===================================================== */
+            const root = document.documentElement;
+            const themeBtn = $('#theme-btn');
+            const themeMeta = $('#theme-color');
+            const darkQuery = window.matchMedia('(prefers-color-scheme: dark)');
+
+            let userChose = false;
+            try {
+                const saved = localStorage.getItem('theme');
+                userChose = saved === 'light' || saved === 'dark';
+            } catch (e) { /* storage blocked: fall back to the system setting */ }
+
+            function setTheme(theme) {
+                root.setAttribute('data-theme', theme);
+                themeMeta.setAttribute('content', theme === 'dark' ? '#000000' : '#f2f2f7');
+                const label = theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode';
+                themeBtn.setAttribute('aria-label', label);
+                themeBtn.title = label;
+            }
+
+            themeBtn.addEventListener('click', () => {
+                const next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+                userChose = true;
+                setTheme(next);
+                try { localStorage.setItem('theme', next); } catch (e) { /* ignore */ }
+            });
+
+            // Follow the device's day/night setting until the visitor picks one manually
+            onMedia(darkQuery, (e) => { if (!userChose) setTheme(e.matches ? 'dark' : 'light'); });
+
+            setTheme(root.getAttribute('data-theme') === 'dark' ? 'dark' : 'light');
+
+            /* =====================================================
+               Navbar: show the small title + hairline after scrolling
+               ===================================================== */
+            const navbar = $('#navbar');
+            const onScroll = () => navbar.classList.toggle('scrolled', window.scrollY > 40);
             window.addEventListener('scroll', onScroll, { passive: true });
             onScroll();
-        });
+
+            /* =====================================================
+               Start
+               ===================================================== */
+            showSubject(subjectFromHash());
+        })();
     </script>
 </body>
 </html>
